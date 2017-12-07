@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pegasus Project</title>
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/css/jobCard.css" rel="stylesheet">
+</head>
+<body>
+    
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Sass</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="jbCard">
+                <jobcard
+                    :data="gridData"
+                    :columns="gridColumns"
+                    :options="options">
+                </jobcard>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+
+<script type="text/x-template" id="jobcard-template">
+    <table class="striped">
+        <thead>
+            <tr>
+                <th v-for="key in columns">
+                    {{ key }}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+             <tr v-for="(entry, index) in data">
+                <td>
+                    <span class="noEdit">{{entry.Quantity}}</span>
+                    <input class='edit' type="text" v-model="entry.Quantity"/>
+                </td>
+                <td>
+
+                   <!-- trick to pass value selected to the gridData object -->
+                    <span class="noEdit">{{entry.Part}}</span>
+                        <select :data-value="index">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="option in options">{{option.name}}</option>
+                        </select>
+                        <input class="input_select" type="hidden" v-model="entry.Part" :data-value="index"/>
+                    </span>
+                </td>
+             </tr>
+        </tbody>
+    </table>
+</script>
+
+<script src="../jquery/dist/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/materialize-css/dist/js/materialize.js"></script>
+<script src="/js/lib/vue.js"></script>
+<script src="/js/jobCard.js"></script>
+</html>
