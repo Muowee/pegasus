@@ -1,8 +1,9 @@
-var option = [
-    {name:"test"},
-    {name:"asefsst2"},
-    {name:"zest3"}
-];
+var options = {
+    "test": null,
+    "asefsst2": null,
+    "zest3": null
+};
+
 var departments = [
     {name:"Powder Coating"},
     {name:"Antiquing"},
@@ -35,7 +36,6 @@ Vue.component('jobcard', {
     props:{
         data: Array,
         columns: Array,
-        options: Array,
         bin: {},
         orders: Array,
         date:{},
@@ -49,7 +49,6 @@ var jobcard = new Vue({
     data:{
         gridColumns: ['Quantity','Part'],
         gridData: job,
-        options: option,
         binNumber: {bin:''},
         orders: orders,
         dueDate: {date:''},
@@ -62,7 +61,17 @@ $(document).ready(function() {
     //render all select
     $('select').material_select();
     //on change event 
-    $('.part select').change(function(){ 
+    $('input.autocomplete').autocomplete({
+        data: options,
+        onSelect: function(t){
+            console.log(t);
+        },
+        // limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+    });
+
+    $('input.autocomplete').on('change', function () {
+    
         //store this element into thus
         var thus = $(this);
         //store data-value of this into val
@@ -114,6 +123,7 @@ $(document).ready(function() {
         });
         
         jobcard.orders = orderClean;
+        
         setTimeout(function(){
             window.print();
             $('.edit').show();

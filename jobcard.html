@@ -27,7 +27,6 @@
                 <jobcard
                     :data="gridData"
                     :columns="gridColumns"
-                    :options="options"
                     :bin="binNumber"
                     :orders="orders"
                     :date="dueDate"
@@ -66,10 +65,10 @@
                 <td class="part">
 
                     <span class="noEdit">{{entry.Part}}</span>
-                    <select :data-value="index">
-                        <option disabled value="" selected>Please select one</option>
-                        <option v-for="option in options">{{option.name}}</option>
-                    </select>
+                    <div class="input-field edit">
+                        <input type="text" class="autocomplete" :data-value="index" :id="index">
+                        <label :for="index">Please type here</label>
+                    </div>
                         <!-- trick to pass value selected to the gridData object -->
                         <input class="input_select" type="hidden" v-model="entry.Part" :data-value="index"/>
                     </span>
