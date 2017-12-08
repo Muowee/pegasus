@@ -1,19 +1,4 @@
 
-
-.edit{
-    display: none;
-}
-.select-wrapper{
-    display: none;
-}
-
-tr:hover .edit{
-    display: block;
-}
-tr:hover .select-wrapper{
-    display: block;
-}
-
-tr:hover .noEdit{
+.noEdit{
     display: none;
 }
