@@ -1,12 +1,25 @@
-var option = [{name:"test"},{name:"asefsst2"},{name:"zest3"}];
-
+var option = [
+    {name:"test"},
+    {name:"asefsst2"},
+    {name:"zest3"}
+];
+var departments = [
+    {name:"Powder Coating"},
+    {name:"Antiquing"},
+    {name:"Polishing"}
+];
 
 Vue.component('jobcard', {
     template: '#jobcard-template',
     props:{
         data: Array,
         columns: Array,
-        options: Array
+        options: Array,
+        bin: {},
+        orders: Array,
+        date:{},
+        departments: Array,
+        department:{}
     }
 })
 
@@ -28,7 +41,16 @@ var jobcard = new Vue({
             { Quantity: 0, Part: ''},
             { Quantity: 0, Part: ''}
         ],
-        options:option
+        options:option,
+        binNumber:{bin:''},
+        orders:[
+            {id:''},
+            {id:''},
+            {id:''}
+        ],
+        dueDate:{date:''},
+        departments:departments,
+        department:{name:''}
     }
 })
 
@@ -36,7 +58,7 @@ $(document).ready(function() {
     //render all select
     $('select').material_select();
     //on change event 
-    $('select').change(function(){ 
+    $('.part select').change(function(){ 
         //store this element into thus
         var thus = $(this);
         //store data-value of this into val
@@ -52,5 +74,34 @@ $(document).ready(function() {
                 $(this)[0].dispatchEvent(new Event('input', { 'bubbles': true }));
             }
         });
+    });
+
+    $('.dept select').change(function(){ 
+        $("#input_select3").val($(this).val());
+        //manually trigger event because materialize css is not good
+        $("#input_select3")[0].dispatchEvent(new Event('input', { 'bubbles': true }));
+
+    });
+
+    $("#datepicker").datepicker({
+        onSelect: function(dateText, inst) { 
+           var dateAsString = dateText; //the first parameter of this function
+           $('#input_select2').val(dateText);
+           $('#input_select2')[0].dispatchEvent(new Event('input', { 'bubbles': true }));
+
+        }
+    });
+
+    $("#print").click(()=>{
+        $('.edit').hide();
+        $('.toHide').hide();
+        $('.select-wrapper').hide();
+        $('.noEdit').show();
+        window.print();
+        $('.edit').show();
+        $('.toHide').show();
+        $('.select-wrapper').show();
+        $('.noEdit').hide();
+        
     });
 });

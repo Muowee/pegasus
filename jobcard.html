@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pegasus Project</title>
-    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/jobCard.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet">
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
 </head>
 <body>
     
@@ -26,12 +27,18 @@
                 <jobcard
                     :data="gridData"
                     :columns="gridColumns"
-                    :options="options">
+                    :options="options"
+                    :bin="binNumber"
+                    :orders="orders"
+                    :date="dueDate"
+                    :departments="departments"
+                    :department="department"
+                    >
                 </jobcard>
             </div>
         </div>
-        <div class="row">
-
+        <div class="row toHide">
+            <a id="print" class="waves-effect waves-light btn right">Print</a>
         </div>
     </div>
     
@@ -51,28 +58,61 @@
         </thead>
 
         <tbody>
-             <tr v-for="(entry, index) in data">
+            <tr v-for="(entry, index) in data">
                 <td>
                     <span class="noEdit">{{entry.Quantity}}</span>
                     <input class='edit' type="text" v-model="entry.Quantity"/>
                 </td>
-                <td>
+                <td class="part">
 
-                   <!-- trick to pass value selected to the gridData object -->
                     <span class="noEdit">{{entry.Part}}</span>
-                        <select :data-value="index">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="option in options">{{option.name}}</option>
-                        </select>
+                    <select :data-value="index">
+                        <option disabled value="" selected>Please select one</option>
+                        <option v-for="option in options">{{option.name}}</option>
+                    </select>
+                        <!-- trick to pass value selected to the gridData object -->
                         <input class="input_select" type="hidden" v-model="entry.Part" :data-value="index"/>
                     </span>
                 </td>
-             </tr>
+            </tr>
+            <tr>
+                <td>Bin:</td>
+                <td>
+                    <span class="noEdit">{{bin.bin}}</span>
+                    <input type="text" class="edit" v-model="bin.bin"/> 
+                </td>
+            </tr>
+
+            <tr v-for="order in orders">
+                <td>Order ID:</td>
+                <td>
+                    <span class="noEdit">{{order.id}}</span>
+                    <input type="text" class="edit" v-model="order.id"/> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="noEdit">{{date.date}}</span>
+                    Due Date : <input type="text" class="edit" id="datepicker">
+                    <input id="input_select2" type="hidden" v-model="date.date"/>
+                </td>
+                <td class="dept">
+                    <span class="noEdit">{{department.name}}</span>
+                    <select>
+                        <option disabled value="" selected>Please select one</option>
+                        <option v-for="dept in departments">{{dept.name}}</option>
+                    </select>
+                        <!-- trick to pass value selected to the gridData object -->
+                        <input id="input_select3" type="hidden" v-model="department.name"/>
+                    </span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </script>
 
 <script src="../jquery/dist/jquery.js"></script>
+<script src="../js/lib/jqueryui/jquery-ui.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/materialize-css/dist/js/materialize.js"></script>
 <script src="/js/lib/vue.js"></script>
