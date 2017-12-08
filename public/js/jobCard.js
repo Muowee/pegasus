@@ -9,6 +9,27 @@ var departments = [
     {name:"Polishing"}
 ];
 
+var job = [
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''},
+    { Quantity: 0, Part: ''}
+];
+
+var orders= [
+    {id:''},
+    {id:''},
+    {id:''}
+];
+
 Vue.component('jobcard', {
     template: '#jobcard-template',
     props:{
@@ -21,38 +42,21 @@ Vue.component('jobcard', {
         departments: Array,
         department:{}
     }
-})
+});
 
 var jobcard = new Vue({
     el:'#jbCard',
     data:{
         gridColumns: ['Quantity','Part'],
-        gridData:[
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''},
-            { Quantity: 0, Part: ''}
-        ],
-        options:option,
-        binNumber:{bin:''},
-        orders:[
-            {id:''},
-            {id:''},
-            {id:''}
-        ],
-        dueDate:{date:''},
-        departments:departments,
-        department:{name:''}
+        gridData: job,
+        options: option,
+        binNumber: {bin:''},
+        orders: orders,
+        dueDate: {date:''},
+        departments: departments,
+        department: {name:''}
     }
-})
+});
 
 $(document).ready(function() {
     //render all select
@@ -97,11 +101,27 @@ $(document).ready(function() {
         $('.toHide').hide();
         $('.select-wrapper').hide();
         $('.noEdit').show();
-        window.print();
-        $('.edit').show();
-        $('.toHide').show();
-        $('.select-wrapper').show();
-        $('.noEdit').hide();
+
+        //clean empty value
+        var jobClean = job.filter((el) => {
+            return (el.Quantity !== 0 && el.Part !== '' && !isNaN(el.Quantity) ) ;
+        });
+        
+        jobcard.gridData = jobClean;
+
+        var orderClean = orders.filter((el) => {
+            return el.id !== '' ;
+        });
+        
+        jobcard.orders = orderClean;
+        setTimeout(function(){
+            window.print();
+            $('.edit').show();
+            $('.toHide').show();
+            $('.select-wrapper').show();
+            $('.noEdit').hide();
+        },2000);
+        
         
     });
 });

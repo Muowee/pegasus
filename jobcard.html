@@ -48,7 +48,7 @@
 </body>
 
 <script type="text/x-template" id="jobcard-template">
-    <table class="striped">
+    <table class="striped bordered">
         <thead>
             <tr>
                 <th v-for="key in columns">
@@ -83,8 +83,9 @@
                 </td>
             </tr>
 
-            <tr v-for="order in orders">
-                <td>Order ID:</td>
+            <tr v-for="(order,index) in orders">
+                <td v-if="index == 0">Order ID:</td>
+                <td v-else></td>
                 <td>
                     <span class="noEdit">{{order.id}}</span>
                     <input type="text" class="edit" v-model="order.id"/> 
@@ -92,12 +93,12 @@
             </tr>
             <tr>
                 <td>
-                    <span class="noEdit">{{date.date}}</span>
-                    Due Date : <input type="text" class="edit" id="datepicker">
+                    <span class="noEdit">Due Date:{{date.date}}</span>
+                    <span class="noEdit">Due Date: </span><input type="text" class="edit" id="datepicker">
                     <input id="input_select2" type="hidden" v-model="date.date"/>
                 </td>
                 <td class="dept">
-                    <span class="noEdit">{{department.name}}</span>
+                    <span class="noEdit">Dept: {{department.name}}</span>
                     <select>
                         <option disabled value="" selected>Please select one</option>
                         <option v-for="dept in departments">{{dept.name}}</option>
