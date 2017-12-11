@@ -9,6 +9,10 @@ module.exports = function(app){
     app.get('/jobcard', (req,res)=>{
         res.sendFile('jobcard.html', { root: root_folder });
     });
+
+    app.get('/polish', (req,res)=>{
+        res.sendFile('polish.html', { root: root_folder });
+    });
     
     app.use(express.static('node_modules', { root: root_folder }));
 
