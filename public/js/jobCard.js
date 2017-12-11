@@ -97,7 +97,8 @@ $(document).ready(function() {
                 $(this).val(thus.val());
                 //manually trigger event because materialize css is not good
                 $(this)[0].dispatchEvent(new Event('input', { 'bubbles': true }));
-                jobcard.gridData[val].id = products.filter(products => products.Description == thus.val())[0].id;
+                if(jobcard.gridData[val].Part !=='')
+                    jobcard.gridData[val].id = products.filter(products => products.Description == thus.val())[0].id;
             }
         });
     });
@@ -120,32 +121,30 @@ $(document).ready(function() {
     })
 
     $("#print").click(()=>{
-        $('.edit').hide();
-        $('.toHide').hide();
-        $('.select-wrapper').hide();
-        $('.noEdit').show();
+        //check if at least 1 part
+        if(job.filter(el => (el.Quantity !== 0 && el.Part !== '' && !isNaN(el.Quantity) )).length)
+        {
+            //clean empty value
+            jobcard.gridData = job.filter(el => (el.Quantity !== 0 && el.Part !== '' && !isNaN(el.Quantity) ));
+    
+            jobcard.orders = orders.filter(el => el.id !== '');
 
-        //clean empty value
-        var jobClean = job.filter((el) => {
-            return (el.Quantity !== 0 && el.Part !== '' && !isNaN(el.Quantity) ) ;
-        });
-        
-        jobcard.gridData = jobClean;
+            $('.edit').hide();
+            $('.toHide').hide();
+            $('.select-wrapper').hide();
+            $('.noEdit').show();
+            setTimeout(function(){
+                window.print();
+                $('.edit').show();
+                $('.toHide').show();
+                $('.select-wrapper').show();
+                $('.noEdit').hide();
+            },2000);
+        }
+        else{
+            Materialize.toast("You must have at least 1 part !!",5000);
+        }
+            
 
-        var orderClean = orders.filter((el) => {
-            return el.id !== '' ;
-        });
-        
-        jobcard.orders = orderClean;
-        
-        setTimeout(function(){
-            window.print();
-            $('.edit').show();
-            $('.toHide').show();
-            $('.select-wrapper').show();
-            $('.noEdit').hide();
-        },2000);
-        
-        
     });
 });
