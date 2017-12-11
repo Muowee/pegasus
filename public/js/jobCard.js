@@ -1,8 +1,29 @@
+var products = {};
 var options = {
-    "test": null,
-    "asefsst2": null,
-    "zest3": null
+    
 };
+
+var socket = io('/job-card');
+socket.on('connect', function(data) {
+    socket.emit('getProducts');
+});
+
+socket.on('message',(data)=>{
+    console.log(data);
+});
+
+socket.on('products',(data)=>{
+    products = data;
+    for(index in data)
+        options[data[index].Description] = null;
+
+        $('input.autocomplete').autocomplete({
+        data: options,
+        // limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+    });
+});
+
 
 var departments = [
     {name:"Powder Coating"},
@@ -11,18 +32,18 @@ var departments = [
 ];
 
 var job = [
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''},
-    { Quantity: 0, Part: ''}
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''},
+    { Quantity: 0, Part: '', id: ''}
 ];
 
 var orders= [
@@ -61,14 +82,7 @@ $(document).ready(function() {
     //render all select
     $('select').material_select();
     //on change event 
-    $('input.autocomplete').autocomplete({
-        data: options,
-        onSelect: function(t){
-            console.log(t);
-        },
-        // limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-    });
+   
 
     $('input.autocomplete').on('change', function () {
     
@@ -96,14 +110,16 @@ $(document).ready(function() {
 
     });
 
-    $("#datepicker").datepicker({
-        onSelect: function(dateText, inst) { 
-           var dateAsString = dateText; //the first parameter of this function
-           $('#input_select2').val(dateText);
-           $('#input_select2')[0].dispatchEvent(new Event('input', { 'bubbles': true }));
-
-        }
+    $("#datepicker").pickadate({
+        format: 'dd-mm-yyyy',
+        closeOnSelect: true,
+        
     });
+
+    $("#datepicker").change(function(){
+        $('#input_select2').val($(this).val());
+        $('#input_select2')[0].dispatchEvent(new Event('input', { 'bubbles': true }))
+    })
 
     $("#print").click(()=>{
         $('.edit').hide();
