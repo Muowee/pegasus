@@ -8,12 +8,11 @@ module.exports = function(jbCard){
             console.log(data); 
             socket.broadcast.emit('message',data);
         });
+
         socket.on('getProducts',()=>{
             require('../../modele/jobCards/getProducts')((products)=>{
                 socket.emit('products',products);
             });
-            
         });
-
     });
 }

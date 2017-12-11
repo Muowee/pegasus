@@ -1,7 +1,5 @@
 var products = {};
-var options = {
-    
-};
+var options = {};
 
 var socket = io('/job-card');
 socket.on('connect', function(data) {
@@ -17,7 +15,7 @@ socket.on('products',(data)=>{
     for(index in data)
         options[data[index].Description] = null;
 
-        $('input.autocomplete').autocomplete({
+    $('input.autocomplete').autocomplete({
         data: options,
         // limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
         minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
@@ -99,6 +97,7 @@ $(document).ready(function() {
                 $(this).val(thus.val());
                 //manually trigger event because materialize css is not good
                 $(this)[0].dispatchEvent(new Event('input', { 'bubbles': true }));
+                jobcard.gridData[val].id = products.filter(products => products.Description == thus.val())[0].id;
             }
         });
     });
@@ -113,7 +112,6 @@ $(document).ready(function() {
     $("#datepicker").pickadate({
         format: 'dd-mm-yyyy',
         closeOnSelect: true,
-        
     });
 
     $("#datepicker").change(function(){

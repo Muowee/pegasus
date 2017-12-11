@@ -1,5 +1,3 @@
-
-
 module.exports = function(callback){
     var con = require('../connexion/db_connexion')();
     var res = con.connect(function(err){
@@ -11,5 +9,4 @@ module.exports = function(callback){
             return callback(result);
         })
     });
-
 }
