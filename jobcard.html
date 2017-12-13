@@ -7,7 +7,7 @@
     <title>Pegasus Project</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/jobCard.css" rel="stylesheet">
-    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" media="all"/>
 </head>
 <body>
     
@@ -31,6 +31,8 @@
                     :date="dueDate"
                     :departments="departments"
                     :department="department"
+                    :type="type"
+                    :esttime="estTime"
                     >
                 </jobcard>
             </div>
@@ -38,7 +40,9 @@
         <div class="row toHide">
             <a id="print" class="waves-effect waves-light btn right">Print</a>
         </div>
+        <h5>Comments:</h5>
     </div>
+
     
 
 
@@ -48,10 +52,11 @@
 <script type="text/x-template" id="jobcard-template">
     <table class="striped bordered">
         <thead>
-            <tr>
-                <th v-for="key in columns">
+            <tr >
+                <th v-for="key in columns" >
                     {{ key }}
                 </th>
+                <th v-for="i in 3" >All Parts</th>
             </tr>
         </thead>
 
@@ -72,14 +77,11 @@
                         <input class="input_select" type="hidden" v-model="entry.Part" :data-value="index"/>
                     </span>
                 </td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
-            <tr>
-                <td>Bin:</td>
-                <td>
-                    <span class="noEdit">{{bin.bin}}</span>
-                    <input type="text" class="edit" v-model="bin.bin"/> 
-                </td>
-            </tr>
+            
 
             <tr v-for="(order,index) in orders">
                 <td v-if="index == 0">Order ID:</td>
@@ -89,22 +91,44 @@
                     <input type="text" class="edit" v-model="order.id"/> 
                 </td>
             </tr>
+
             <tr>
-                <td>
-                    <span class="noEdit">Due Date:{{date.date}}</span>
-                    <span class="edit">Due Date: </span><input type="text" class="edit" id="datepicker">
-                    <input id="input_select2" type="hidden" v-model="date.date"/>
+                <td class="custom">Bin:</td>
+                <td class="custom">
+                    <span class="noEdit">{{bin.bin}}</span>
+                    <input type="text" class="edit" v-model="bin.bin"/> 
                 </td>
-                <td class="dept">
+                <td colspan="3" class="custom">
+                    Estimation Time: {{esttime.time}}
+                </td>
+                
+            </tr>
+
+            <tr>
+                <td class="custom">
+                    <span class="edit">
+                        Type: <input type="text" v-model="type.name"/>
+                    </span>
+                    <span class="noEdit">Type: {{type.name}}</span>
+                </td>
+               
+                <td class="dept custom" >
                     <span class="noEdit">Dept: {{department.name}}</span>
+                    <span class="edit">Dept:</span>
                     <select>
                         <option disabled value="" selected>Please select one</option>
                         <option v-for="dept in departments">{{dept.name}}</option>
                     </select>
                         <!-- trick to pass value selected to the gridData object -->
                         <input id="input_select3" type="hidden" v-model="department.name"/>
-                    </span>
                 </td>
+                <td  colspan="3" class="custom">
+                        <span class="noEdit">Due Date: {{date.date}}</span>
+                        <span class="edit">Due Date: </span>
+                        <input type="text" class="edit" id="datepicker">
+                        <input id="input_select2" type="hidden" v-model="date.date"/>
+                </td>
+                    
             </tr>
         </tbody>
     </table>
@@ -114,5 +138,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/materialize-css/dist/js/materialize.js"></script>
 <script src="/js/lib/vue.js"></script>
+<script src="/moment/moment.js"></script>
 <script src="/js/jobCard.js"></script>
 </html>

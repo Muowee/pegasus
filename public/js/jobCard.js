@@ -24,24 +24,22 @@ socket.on('products',(data)=>{
 
 
 var departments = [
-    {name:"Powder Coating"},
     {name:"Antiquing"},
+    {name:"Powder Coating"},
     {name:"Polishing"}
 ];
 
 var job = [
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''},
-    { Quantity: 0, Part: '', id: ''}
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''},
+    { Quantity: 0, Part: '', id: '', time:''}
 ];
 
 var orders= [
@@ -59,7 +57,9 @@ Vue.component('jobcard', {
         orders: Array,
         date:{},
         departments: Array,
-        department:{}
+        department:{},
+        type:{},
+        esttime:{}
     }
 });
 
@@ -72,8 +72,71 @@ var jobcard = new Vue({
         orders: orders,
         dueDate: {date:''},
         departments: departments,
-        department: {name:''}
+        department: {name:''},
+        type: {name: ''},
+        estTime:{time: '00:00:00' }
+    },
+    watch: {
+        'department.name': function(){
+            this.calcTime();
+        }
+    },
+    methods: {
+        calcTime: function(){
+            switch(this.department.name){
+                case 'Antiquing':   
+                    var m = moment('00:00:00','HH:mm:ss');
+                    for(let entry in this.gridData){
+                        let tmp = this.gridData[entry].time.split('|');
+                        if(tmp.length == 3){
+                            var hms = tmp[0].split(':');
+                            var duration = moment.duration({
+                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
+                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
+                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
+                            });
+                            m.add(duration);
+                            this.estTime.time = m.format('HH:mm:ss');
+                        }
+                    }
+                    break;
+                case 'Powder Coating':
+                    var m = moment('00:00:00','HH:mm:ss');
+                    for(let entry in this.gridData){
+                        let tmp = this.gridData[entry].time.split('|');
+                        if(tmp.length == 3){
+                            var hms = tmp[1].split(':');
+                            var duration = moment.duration({
+                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
+                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
+                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
+                            });
+                            m.add(duration);
+                            this.estTime.time = m.format('HH:mm:ss');
+                        }
+                       
+                    }
+                    break;
+                case 'Polishing':
+                    var m = moment('00:00:00','HH:mm:ss');
+                    for(let entry in this.gridData){
+                        let tmp = this.gridData[entry].time.split('|');
+                        if(tmp.length == 3){
+                            var hms = tmp[2].split(':');
+                            var duration = moment.duration({
+                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
+                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
+                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
+                            });
+                            m.add(duration);
+                            this.estTime.time = m.format('HH:mm:ss');
+                        }
+                    }
+                    break;
+            }
+        }
     }
+
 });
 
 $(document).ready(function() {
@@ -97,8 +160,11 @@ $(document).ready(function() {
                 $(this).val(thus.val());
                 //manually trigger event because materialize css is not good
                 $(this)[0].dispatchEvent(new Event('input', { 'bubbles': true }));
-                if(jobcard.gridData[val].Part !=='')
+                if(jobcard.gridData[val].Part !==''){
                     jobcard.gridData[val].id = products.filter(products => products.Description == thus.val())[0].id;
+                    jobcard.gridData[val].time = products.filter(products => products.Description == thus.val())[0].processTime;
+
+                }
             }
         });
     });
@@ -133,6 +199,7 @@ $(document).ready(function() {
             $('.toHide').hide();
             $('.select-wrapper').hide();
             $('.noEdit').show();
+            sendNewJC();
             setTimeout(function(){
                 window.print();
                 $('.edit').show();
@@ -148,3 +215,15 @@ $(document).ready(function() {
 
     });
 });
+
+var sendNewJC = function(){
+    var jC = {
+        'jobs': jobcard.gridData,
+        'bin': jobcard.binNumber,
+        'department': jobcard.department,
+        'dueDate': jobcard.dueDate,
+        'type': jobcard.type,
+        'order': jobcard.orders
+    };
+    socket.emit('newJob',jC);
+}

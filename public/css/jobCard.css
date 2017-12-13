@@ -6,3 +6,7 @@
 img.right.circle{
     display: none;
 }
+
+jbCard table, td, th {
+    border: 1px solid grey !important;
+}

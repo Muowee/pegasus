@@ -14,5 +14,9 @@ module.exports = function(jbCard){
                 socket.emit('products',products);
             });
         });
+
+        socket.on('newJob', (jC)=>{
+            console.log(jC);
+        });
     });
 }
