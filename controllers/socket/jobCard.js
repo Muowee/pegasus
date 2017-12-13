@@ -16,7 +16,9 @@ module.exports = function(jbCard){
         });
 
         socket.on('newJob', (jC)=>{
-            console.log(jC);
+            require('../../modele/jobCards/createJC')(jC,(jobCard)=>{
+                console.log(jobCard);
+            });
         });
     });
 }

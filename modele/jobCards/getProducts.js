@@ -3,7 +3,7 @@ module.exports = function(callback){
     var res = con.connect(function(err){
         if(err) throw err;
         console.log("Connected");
-        var sql = "SELECT * FROM pegasus.component"
+        var sql = "SELECT * FROM component"
         con.query(sql, function(err,result){
             if(err) throw err;
             return callback(result);
