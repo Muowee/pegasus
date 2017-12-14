@@ -14,5 +14,11 @@ module.exports = function(jbCard){
                 socket.emit('products',products);
             });
         });
+
+        socket.on('newJob', (jC)=>{
+            require('../../modele/jobCards/createJC')(jC,(jobCard)=>{
+                console.log(jobCard);
+            });
+        });
     });
 }
