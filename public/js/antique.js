@@ -1,4 +1,4 @@
-var socket = io('/polish');
+var socket = io('/antique');
 socket.on('connect', function(data) {
    socket.emit('join', 'Hello World from client');
 });

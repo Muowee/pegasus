@@ -1,8 +1,8 @@
-module.exports = function(pol){
+module.exports = function(ant){
     
-   pol.on('connection', (socket)=>{
+   ant.on('connection', (socket)=>{
         console.log("A client is connected");
-        socket.emit('message', 'You are connected to polish department!!');
+        socket.emit('message', 'You are connected to antique department!!');
             
         socket.broadcast.emit('message', 'Another client has just connected!');
         socket.on('message', (data) => {
