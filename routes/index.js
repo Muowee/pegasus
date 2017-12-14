@@ -13,7 +13,11 @@ module.exports = function(app){
     app.get('/polish', (req,res)=>{
         res.sendFile('polish.html', { root: root_folder });
     });
-    
+
+    app.get('/antique', (req,res)=>{
+        res.sendFile('antique.html', { root: root_folder });
+    });
+
     app.use(express.static('node_modules', { root: root_folder }));
 
     app.use(express.static('public',{root: root_folder}));
