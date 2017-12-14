@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS  -->
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
+    <link href="css/polish.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+</head>
+<body>
+    <nav class="black" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="rules.html" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="red-text"><b>Antique<b></li>  		
+                <li class="active"><a class="dropdown-button" href="/index" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+            </ul>
+      
+    <!-- navbar -->
+
+            <ul id="pages" class="dropdown-content">
+                <li><a href="/polish">Polish</a></li>
+                <li><a href="/antique">Antique</a></li>
+                <li><a href="/powder">Powder Coating</a></li>
+            </ul>
+
+            <a href="/index" data-activates="slide-out" class="button-collapse right"><i class="material-icons white-text">menu</i></a>
+        </div>
+    </nav>
+    
+    <ul id="slide-out" class="side-nav">
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-teal active">Pages</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="/polish">Polish</a></li>
+                            <li><a href="/polish">Antique</a></li>
+                            <li><a href="/polish">Powder coating</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><a class="waves-effect waves-teal" href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+    </ul>
+
+
+ <!-- body -->
+
+
+
+
+    <!-- <div class="row">
+        <div class="col s6">
+      	    <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">label_outline</i>
+                            20210
+                        <i class="new badge"></i>
+                        <ul id="dropdown2" class="dropdown-content"> 
+                            <li><a href="#!">Antique</a></li>
+                            <li><a href="#!">Powder Coating</a></li>
+                            <li><a href="#!">Finish process</a></li>
+                        </ul>
+                        <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Process<i class="material-icons right">arrow_drop_down</i></a>
+                    </div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">label_outline</i>
+                        20225
+                        <span class="new badge"></span>
+                    </div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">label_outline</i>
+                        50522
+                        <span class="new badge"></span>
+                    </div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    60220
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    85000
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    45000
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    14520
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    85420
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    48508
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                    <i class="material-icons">label_outline</i>
+                    84520
+                    <span class="new badge"></span></div>
+                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                </li>
+
+                <ul class="pagination">
+                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                    <li class="active"><a href="#!">1</a></li>
+                    <li class="waves-effect"><a href="#!">2</a></li>
+                    <li class="waves-effect"><a href="#!">3</a></li>
+                    <li class="waves-effect"><a href="#!">4</a></li>
+                    <li class="waves-effect"><a href="#!">5</a></li>
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
+            </ul>
+        </div> -->
+        
+<div class="container">
+        <div class="fixed-action-btn toolbar">
+                <a class="btn-floating btn-large orange darken-3">
+                  <i class="large material-icons">mode_edit</i>
+                </a>
+                <ul>
+                  <li id="antique" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>ANTIQUE</a></li>
+                  <li id="powder" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>POWDER COATING</a></li>
+                  <li id="finish" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>FINISH</a></li>
+                  <li id="clear" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>CLEAR</a></li>
+                </ul>
+              </div>
+    <div class="row">          
+        <div class="col s12">
+                
+            <div id="Tablepolish">
+              <table>
+                <thead>
+                  <tr>
+                    <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
+                      <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
+                    </th>
+                     <th>action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="row in get_rows()">
+                    <td v-for="col in columns">{{row[col]}}</td>
+                    <td>
+                        <p>
+                            <input type="checkbox" :id="row.id" />
+                            <label :for="row.id"></label>
+                        </p>
+                    </td>
+                    
+                  </tr>
+                </tbody>
+             </table>
+             <div class="pagination">
+               <div class="number"
+                     v-for="i in num_pages()" 
+                    v-bind:class="[i == currentPage ? 'active' : '']"
+                    v-on:click="change_page(i)">{{i}}</div>
+             </div>
+            
+           </div>
+
+            
+
+        </div>
+
+    </div>
+</div>
+   
+ 
+
+
+  
+
+  <!-- footer -->
+ 
+
+   <footer class="page-footer black">
+      <div class="container">
+        <div class="row">
+          <div class="col s6 m3">
+            <!-- <img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""> -->
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="../jquery/dist/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/materialize-css/dist/js/materialize.js"></script>
+    <script src="/js/lib/vue.js"></script>
+    
+    
+    <!-- External libraries -->
+    <script src="js/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="js/lib/masonry.pkgd.min.js"></script>
+    <script src="js/lib/TweenMax.min.js"></script>
+    <script src="js/lib/ScrollMagic.min.js"></script>
+    <script src="js/lib/animation.gsap.min.js"></script>
+
+    <!-- Initialization script -->
+    <script src="js/lib/startup.js"></script>
+
+    <!-- custom -->
+    <script src="js/polish.js"></script>
+  </body>
+</html>
