@@ -223,7 +223,8 @@ var sendNewJC = function(){
         'department': jobcard.department,
         'dueDate': jobcard.dueDate,
         'type': jobcard.type,
-        'order': jobcard.orders
+        'order': jobcard.orders,
+        'estimationTime': jobcard.estTime.time
     };
     socket.emit('newJob',jC);
 }

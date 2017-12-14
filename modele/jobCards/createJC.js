@@ -1,23 +1,29 @@
 moment = require("moment");
 module.exports = function(jC, callback){
+    //prepare varaibles to send to the database
     var param = [];
     var tmp = {};
     tmp["components"] = '';
-
+    //add all products in tmp format: "id1|id2|id3"
+    
     for(job in jC.jobs){
         tmp["components"] += jC.jobs[job].id + '|';
-        param.push([jC.jobs[job].id,jC.jobs[job].Quantity]);
+        param.push([jC.jobs[job].id, jC.jobs[job].Quantity, jC.jobs[job].Part]);
     }
-        tmp.components = tmp.components.slice(0,-1);
+    //remove the last pipe
+    tmp.components = tmp.components.slice(0,-1);
 
+    //put the type
     tmp["type"] = jC.type.name;
 
     tmp["orders"] = '';
 
+    //add order same as product
     for(order in jC.order)
         tmp.orders += jC.order[order].id + '|';
     tmp.orders = tmp.orders.slice(0,-1);
 
+    //put the department id according to the id in the database
     switch (jC.department.name){
         case 'Antiquing':
             tmp.id_dept = 2;
@@ -30,23 +36,26 @@ module.exports = function(jC, callback){
             break;
     }
 
+    //put the bin number
     tmp.bin = jC.bin.bin;
 
+    //add the dispatched date
     tmp.dispatched_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('YYYY-MM-DD');
 
+    //via moment put the today date for the start date
     tmp.start_date = moment().format('YYYY-MM-DD');
 
 
     var con = require('../connexion/db_connexion')();
     con.connect(function(err){
             if(err) {
-                console.erro('error connecting: ' + err.stack);
+                console.error('error connecting: ' + err.stack);
                 return;
             }
     });
     con.beginTransaction(function(err){
         if(err) 
-            throw err;
+        console.error("Error while starting transaction ");
         let sql = 'INSERT INTO job_card set ?';
         con.query(sql, tmp, function(err, results){
             if (err) { 
