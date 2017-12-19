@@ -12,11 +12,12 @@
 
   <!-- CSS  -->
     <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
-    <link href="css/polish.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/antique.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 
 </head>
 <body>
+<div class="navbar-fixed">
     <nav class="black" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" href="rules.html" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -36,6 +37,7 @@
             <a href="/index" data-activates="slide-out" class="button-collapse right"><i class="material-icons white-text">menu</i></a>
         </div>
     </nav>
+</div>
     
     <ul id="slide-out" class="side-nav">
         <li class="no-padding">
@@ -45,8 +47,8 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="/polish">Polish</a></li>
-                            <li><a href="/polish">Antique</a></li>
-                            <li><a href="/polish">Powder coating</a></li>
+                            <li><a href="/antique">Antique</a></li>
+                            <li><a href="/powder">Powder coating</a></li>
                         </ul>
                     </div>
                 </li>
@@ -163,8 +165,8 @@
                   <i class="large material-icons">mode_edit</i>
                 </a>
                 <ul>
-                  <li id="antique" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>ANTIQUE</a></li>
-                  <li id="powder" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>POWDER COATING</a></li>
+                  <li id="move_polish" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>POLISH</a></li>
+                  <li id="move_powder" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>POWDER COATING</a></li>
                   <li id="finish" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>FINISH</a></li>
                   <li id="clear" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>CLEAR</a></li>
                 </ul>
@@ -172,8 +174,8 @@
     <div class="row">          
         <div class="col s12">
                 
-            <div id="Tablepolish">
-              <table>
+            <div id="Tableantique">
+              <table >
                 <thead>
                   <tr>
                     <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
@@ -183,11 +185,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="row in get_rows()">
-                    <td v-for="col in columns">{{row[col]}}</td>
+                  <tr id="source" v-for="row in rows">
+                    <td> {{row.id}} </td>
+                    <td> {{row.PulledDate}} </td>
+                    <td> {{row.Qty}} </td>
+                    <td> {{row.Finished}} </td>
+                    <td> {{row.Bin}} </td>
+                    <td> {{row.DueDate}} </td>
+                    <td>
+                        <input    type="input" v-model="row.priority" :data-value="row.id"/>
+                    </td>
                     <td>
                         <p>
-                            <input type="checkbox" :id="row.id" />
+                            <input class='checkbox' type="checkbox" :id="row.id" />
                             <label :for="row.id"></label>
                         </p>
                     </td>
@@ -195,12 +205,7 @@
                   </tr>
                 </tbody>
              </table>
-             <div class="pagination">
-               <div class="number"
-                     v-for="i in num_pages()" 
-                    v-bind:class="[i == currentPage ? 'active' : '']"
-                    v-on:click="change_page(i)">{{i}}</div>
-             </div>
+             
             
            </div>
 
@@ -247,6 +252,6 @@
     <script src="js/lib/startup.js"></script>
 
     <!-- custom -->
-    <script src="js/polish.js"></script>
+    <script src="js/antique.js"></script>
   </body>
 </html>
