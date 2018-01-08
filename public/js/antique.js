@@ -145,7 +145,7 @@ $(document).ready(()=>{
       if(confirm("Do you want to finish the process?")){
         for(job in jobs)
         Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
-        socket.emit('sendto'+$(this).attr('id').split('_')[1],jobs);
+        socket.emit($(this).attr('id'),jobs);
       }
     });
  

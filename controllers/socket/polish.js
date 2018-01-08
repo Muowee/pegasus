@@ -1,6 +1,6 @@
-module.exports = function(pol){
+module.exports = function(namespaces){
     
-   pol.on('connection', (socket)=>{
+    namespaces.pol.on('connection', (socket)=>{
         console.log("A client is connected");
         socket.emit('message', 'You are connected to polish department!!');
             
