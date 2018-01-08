@@ -1,6 +1,6 @@
-module.exports = function(dept){
+module.exports = function(namespaces){
     
-   dept.on('connection', (socket)=>{
+    namespaces.dept.on('connection', (socket)=>{
         console.log("A client is connected");
         socket.emit('message', 'You are connected to department!!');
             

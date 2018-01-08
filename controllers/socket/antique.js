@@ -1,6 +1,6 @@
-module.exports = function(ant){
+module.exports = function(namespaces){
     
-   ant.on('connection', (socket)=>{
+    namespaces.ant.on('connection', (socket)=>{
         console.log("A client is connected");
         socket.emit('message', 'You are connected to antique department!!');
             

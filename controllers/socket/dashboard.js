@@ -1,6 +1,6 @@
-module.exports = function(dash){
+module.exports = function(namespaces){
     
-   dash.on('connection', (socket)=>{
+    namespaces.dash.on('connection', (socket)=>{
         console.log("A client is connected");
         socket.emit('message', 'You are connected to dashboard!!');
             

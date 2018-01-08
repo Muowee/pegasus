@@ -1,17 +1,18 @@
 //Main socket's controller
 
 module.exports = function(io){
-    
-    var dash = io.of('/dashboard');
-    var dept = io.of('/department');
-    var jbcard = io.of('/job-card');
-    var pol = io.of('/polish');
-    var ant = io.of('/antique');
+    var namespaces = {};
+    namespaces.dash = io.of('/dashboard');
+    namespaces.dept = io.of('/department');
+    namespaces.jbCard = io.of('/job-card');
+    namespaces.pol = io.of('/polish');
+    namespaces.ant = io.of('/antique');
+    namespaces.powCoat = io.of('/powder-coated');
 
-    var dashboard = require('./dashboard')(dash);
-    var department = require('./department')(dept);
-    var jobCard = require('./jobCard')(jbcard);
-    var polish = require('./polish')(pol);
-    var antique = require('./antique')(ant);
+    var dashboard = require('./dashboard')(namespaces);
+    // var department = require('./department')(namespaces);
+    var jobCard = require('./jobCard')(namespaces);
+    var polish = require('./polish')(namespaces);
+    var antique = require('./antique')(namespaces);
 
 }
