@@ -9,6 +9,18 @@ module.exports = function(ant){
             console.log(data); 
             socket.broadcast.emit('message',data);
         });
+
+        socket.on('sendtopolish',(data) => {
+            console.log(data)
+        });
+
+        socket.on('sendtopowder',(data) => {
+            console.log(data)
+        });
+
+        socket.on('finish',(data) => {
+            console.log(data)
+        });
     });
 
 }

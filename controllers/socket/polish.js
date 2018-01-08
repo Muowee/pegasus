@@ -9,6 +9,19 @@ module.exports = function(pol){
             console.log(data); 
             socket.broadcast.emit('message',data);
         });
+
+        socket.on('sendtoantique', (data) => {
+            console.log(data); 
+        });
+
+        socket.on('sendtopowder', (data) => {
+            console.log(data); 
+        });
+
+        socket.on('finish', (data) => {
+            console.log(data); 
+        });
+
     });
 
 }
