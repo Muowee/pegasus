@@ -4,7 +4,7 @@ module.exports = function(dept, callback){
     var res = con.connect(function(err){
         if(err) throw err;
         console.log("Connected");
-        var sql = "call getJobWithTime(?)"
+        var sql = "call getJobWithTime(?)";
         con.query(sql, [dept], function(err, result){
             if(err) throw err;
             
@@ -14,10 +14,10 @@ module.exports = function(dept, callback){
                 let tmpJob = {
                     id: results[job].id,
                     estimated_time: results[job].estimated_time,
-                    pulleddate: results[job].start_date,
+                    pulled_date: results[job].start_date,
                     orders: results[job].orders,
                     bin: results[job].bin,
-                    finished: results[job].type,
+                    finished: results[job].finished,
                     due_date: results[job].due_date,
                     colour_in: results[job].colour_in,
                     colour_out: results[job].colour_out,

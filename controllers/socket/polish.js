@@ -11,7 +11,7 @@ module.exports = function(namespaces){
         });
 
         socket.on('getJobs',()=>{
-            require('../../modele/jobCards/getJobs')(1, (jobs)=>{
+            require('../../modele/dept/getJobs')(1, (jobs)=>{
                 socket.emit('jobs',jobs);
             });
         });
@@ -25,7 +25,8 @@ module.exports = function(namespaces){
         });
 
         socket.on('finish', (data) => {
-            console.log(data); 
+            for(let i in data)
+                require('../../modele/dept/endJob')(data[i].id);
         });
 
     });

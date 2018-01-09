@@ -197,7 +197,7 @@ var sendNewJC = function(){
         'dueDate': jobcard.dueDate,
         'type': jobcard.type,
         'order': jobcard.orders,
-        'estimationTime': jobcard.estTime.time,
+        'estimated_time': jobcard.estTime.time,
         'colourIn':jobcard.colourIn.name,
         'colourOut':jobcard.colourOut.name,
         'comment':jobcard.comment.name,

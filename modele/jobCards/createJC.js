@@ -14,7 +14,7 @@ module.exports = function(jC, callback){
     tmp.components = tmp.components.slice(0,-1);
 
     //put the type
-    tmp["type"] = jC.type.name;
+    tmp["finished"] = jC.type.name;
 
     tmp["orders"] = '';
 
@@ -40,10 +40,10 @@ module.exports = function(jC, callback){
     tmp.bin = jC.bin.bin;
 
     //add the dispatched date
-    tmp.dispatched_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('YYYY-MM-DD');
+    tmp.due_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('YYYY-MM-DD');
 
     //via moment put the today date for the start date
-    tmp.start_date = moment().format('YYYY-MM-DD HH:mm:ss');
+    tmp.pulled_date = moment().format('YYYY-MM-DD HH:mm:ss');
 
     //add the in colour
     tmp.colour_in = jC.colourIn;
@@ -94,6 +94,13 @@ module.exports = function(jC, callback){
                     }
                     console.log('Transaction Complete.');
                     con.end();
+                    
+                    //reformat for view
+                    tmp["estimated_time"] = jC.estimated_time;
+                    tmp.due_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('DD-MM-YYYY');
+                    tmp.pulled_date = moment().format('DD-MM-YYYY HH:mm:ss');
+
+                    //return the temp object (that is the jobcard)
                     return callback(tmp);
                 })
             });
