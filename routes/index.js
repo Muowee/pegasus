@@ -18,6 +18,10 @@ module.exports = function(app){
         res.sendFile('antique.html', { root: root_folder });
     });
 
+    app.get('/statistics', (req,res)=>{
+        res.sendFile('statistics.html', { root: root_folder });
+    });
+
     app.use(express.static('node_modules', { root: root_folder }));
 
     app.use(express.static('public',{root: root_folder}));
