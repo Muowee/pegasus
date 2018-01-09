@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Antique</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS  -->
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
+    <link href="css/antique.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+</head>
+<body>
+<div class="navbar-fixed">
+    <nav class="black" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="red-text"><b>Antique<b></li>  		
+                <li><a href="/jobcard">JobCard</a></li>
+                <li class="active"><a class="dropdown-button" href="/index" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+            </ul>
+      
+    <!-- navbar -->
+
+            <ul id="pages" class="dropdown-content">
+                <li><a href="/polish">Polish</a></li>
+                <li><a href="/antique">Antique</a></li>
+                <li><a href="/powder">Powder Coating</a></li>
+                <li>
+                    <i class="mdi-action-settings-overscan">::before</i>
+                </li>
+            </ul>
+
+            <a href="/index" data-activates="slide-out" class="button-collapse right"><i class="material-icons white-text">menu</i></a>
+        </div>
+    </nav>
+</div>
+
+<ul id="slide-out" class="side-nav">
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal active">Pages</a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="/polish">Polish</a></li>
+                        <li><a href="/antique">Antique</a></li>
+                        <li><a href="/powder">Powder coating</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li><a class="waves-effect waves-teal" href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+</ul>
+
+
+<!-- body -->
+
+<!-- footer -->
+ 
+
+<footer class="page-footer black">
+    <div class="container">
+      <div class="row">
+        <div class="col s6 m3">
+          <!-- <img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""> -->
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--  Scripts-->
+  <script src="../jquery/dist/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/materialize-css/dist/js/materialize.js"></script>
+  <script src="/js/lib/vue.js"></script>
+  
+  
+  <!-- External libraries -->
+  <script src="js/lib/imagesloaded.pkgd.min.js"></script>
+  <script src="js/lib/masonry.pkgd.min.js"></script>
+  <script src="js/lib/TweenMax.min.js"></script>
+  <script src="js/lib/ScrollMagic.min.js"></script>
+  <script src="js/lib/animation.gsap.min.js"></script>
+
+  <!-- Initialization script -->
+  <script src="js/lib/startup.js"></script>
+
+  <!-- custom -->
+  <script src="js/antique.js"></script>
+</body>
+</html>

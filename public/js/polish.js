@@ -9,22 +9,25 @@ socket.on('message',(data)=>{
 var job = [];
 
 socket.on('jobs',(data)=>{
-    console.log(data);
     for(let jb in data){
         let tmp = {};
         for( let key in data[jb]){
             tmp[key] = data[jb][key];
         }
         tmp["priority"]=4;
-        console.log(tmp);
         job.push(tmp);
     }
-    console.log(job);
-    
 });
 
 socket.on('newJob',(data)=>{
-    console.log(data);
+    for(let jb in data){
+        let tmp = {};
+        for( let key in data[jb]){
+            tmp[key] = data[jb][key];
+        }
+        tmp["priority"]=4;
+        job.push(tmp);
+    }
 })
 
 var Tablepolish = new Vue({
@@ -84,27 +87,25 @@ $(document).ready(()=>{
     $(".mybtn").on("click",function(){
         $(this).attr("data-value");
     });
-    
-    
-
-    
       // Alert
     
-      Materialize.toast('Welcome to the Polish Department!', 4000)
+    Materialize.toast('Welcome to the Polish Department!', 4000)
 
 
       // Uncheked bottom
-      $("#clear").click(function(){
+    $("#clear").click(function(){
         $(".checkbox:checked").each(function(){
             $(this).prop("checked",false);
         });
-      });
+    });
       // Send to antique, reference in the table
     $("#move_antique").click(function(){
         var jobs = [];
         $(".checkbox:checked").each(function(){
             var thus = this;
-            jobs.push( Tablepolish.rows.filter(rows => rows.id == $(thus).attr("id"))[0] );
+            let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            delete tmp.priority;
+            jobs.push(tmp);
             $(this).prop("checked",false);
             
         });
@@ -119,10 +120,12 @@ $(document).ready(()=>{
 
     // Send to Powder Coating, reference in the table
     $("#move_powder").click(function(){
-      var jobs = [];
+      let jobs = [];
       $(".checkbox:checked").each(function(){
         var thus = this;
-        jobs.push(Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0]);
+        let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+        delete tmp.priority;
+        jobs.push(tmp);
         $(this).prop("checked",false);
       });
       if(confirm("Are you sure?")){
@@ -137,7 +140,9 @@ $(document).ready(()=>{
       var jobs = []
       $(".checkbox:checked").each(function(){
         var thus = this;
-        jobs.push(Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0]);
+        let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+        delete tmp.priority;
+        jobs.push(tmp);
         $(this).prop("checked",false);
       });
       if(confirm("Do you want to finish the process?")){

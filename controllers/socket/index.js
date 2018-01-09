@@ -8,11 +8,13 @@ module.exports = function(io){
     namespaces.pol = io.of('/polish');
     namespaces.ant = io.of('/antique');
     namespaces.powCoat = io.of('/powder-coated');
+    namespaces.stat = io.of('/statistics');
 
     var dashboard = require('./dashboard')(namespaces);
     // var department = require('./department')(namespaces);
     var jobCard = require('./jobCard')(namespaces);
     var polish = require('./polish')(namespaces);
     var antique = require('./antique')(namespaces);
+    var statistics = require('./statistics')(namespaces);
 
 }
