@@ -43,7 +43,7 @@ module.exports = function(jC, callback){
     tmp.dispatched_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('YYYY-MM-DD');
 
     //via moment put the today date for the start date
-    tmp.start_date = moment().format('YYYY-MM-DD');
+    tmp.start_date = moment().format('YYYY-MM-DD HH:mm:ss');
 
 
     var con = require('../connexion/db_connexion')();
