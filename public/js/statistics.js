@@ -30,10 +30,9 @@ socket.on('newJob',(data)=>{
     
 Materialize.toast('Welcome to the statistics!', 4000)
 
-//Highcharts
 var seriesOptions = [],
     seriesCounter = 0,
-    names = ['Polish', 'Antique', 'Powder'];
+    names = ['MSFT', 'AAPL', 'GOOG'];
 
 /**
  * Create the chart when all data is loaded
