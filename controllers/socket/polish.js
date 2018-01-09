@@ -26,7 +26,7 @@ module.exports = function(namespaces){
 
         socket.on('finish', (data) => {
             for(let i in data)
-                require('../../modele/dept/endJob')(data[i].id);
+                require('../../modele/dept/endJob')(data[i].id, 1);
         });
 
     });
