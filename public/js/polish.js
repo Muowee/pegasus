@@ -1,10 +1,26 @@
 var socket = io('/polish');
 socket.on('connect', function(data) {
-   socket.emit('join', 'Hello World from client');
+    socket.emit('getJobs');
 });
 
 socket.on('message',(data)=>{
     console.log(data);
+});
+var job = [];
+
+socket.on('jobs',(data)=>{
+    console.log(data);
+    for(let jb in data){
+        let tmp = {};
+        for( let key in data[jb]){
+            tmp[key] = data[jb][key];
+        }
+        tmp["priority"]=0;
+        console.log(tmp);
+        job.push(tmp);
+    }
+    console.log(job);
+    
 });
 
 socket.on('newJob',(data)=>{
@@ -18,30 +34,7 @@ var Tablepolish = new Vue({
       elementsPerPage: 20000000,
       ascending: false,
       sortColumn: '',
-      rows: [
-        { id: 1,EstimateTime: "00:25:00", PulledDate:"21/12/2017", Qty: "5", Finished: 'Antique Silver' ,Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 2,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Brass',Bin:'2737',DueDate: '21/12/2017'  , priority:'' },
-        { id: 3,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 4,EstimateTime: "",PulledDate:"21/12/2017", Qty: "9", Finished: 'Antique Brass',Bin:'2737',DueDate: '21/12/2017'  , priority:'' },
-        { id: 5,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 6,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 32,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 7,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 8,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 9,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 10,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 11,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 12,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 13,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 14,EstimateTime: "",PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 15,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 16,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 17,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 18,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 19,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 20,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 21,EstimateTime: "",PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-      ]
+      rows: job
     },
     methods: {
       "sortTable": function sortTable(col) {

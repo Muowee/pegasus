@@ -181,18 +181,18 @@
                     <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
                       <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
                     </th>
-                     <th>action</th>
+                    <th>action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr id="source" v-for="row in rows">
                     <td> {{row.id}} </td>
-                    <td> {{row.EstimateTime}}</td>
-                    <td> {{row.PulledDate}} </td>
-                    <td> {{row.Qty}} </td>
-                    <td> {{row.Finished}} </td>
-                    <td> {{row.Bin}} </td>
-                    <td> {{row.DueDate}} </td>
+                    <td> {{row.estimated_time.split('|')[2]}}</td>
+                    <td> {{row.pulleddate}} </td>
+                    <td> {{row.orders}} </td>
+                    <td> {{row.bin}} </td>
+                    <td> {{row.finished}} </td>
+                    <td> {{row.due_date}} </td>
                     <td>
                         <input    type="input" v-model="row.priority" :data-value="row.id"/>
                     </td>

@@ -1,0 +1,40 @@
+module.exports = function(dept, callback){
+    let tmp = [];
+    var con = require('../connexion/db_connexion')();
+    var res = con.connect(function(err){
+        if(err) throw err;
+        console.log("Connected");
+        var sql = "call getJobWithTime(?)"
+        con.query(sql, [dept], function(err, result){
+            if(err) throw err;
+            
+            let results = result[0];
+
+            for(let job in results){
+                let tmpJob = {
+                    id: results[job].id,
+                    estimated_time: results[job].estimated_time,
+                    pulleddate: results[job].start_date,
+                    orders: results[job].orders,
+                    bin: results[job].bin,
+                    finished: results[job].type,
+                    due_date: results[job].due_date
+                };
+
+                tmp.push(tmpJob);
+
+                // let id = result[job].id;
+                // let estimated_time = '';
+                // let pulleddate = result[job].start_date;
+                // let orders = result[job].orders;
+                // let bin = result[job].bin;
+                // let finished = result[job].type;
+                // let due_date = result[job].due_date;
+
+
+            }
+            
+            return callback(tmp);
+        })
+    });
+}

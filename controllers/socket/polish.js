@@ -10,6 +10,12 @@ module.exports = function(namespaces){
             socket.broadcast.emit('message',data);
         });
 
+        socket.on('getJobs',()=>{
+            require('../../modele/jobCards/getJobs')(1, (jobs)=>{
+                socket.emit('jobs',jobs);
+            });
+        });
+
         socket.on('sendtoantique', (data) => {
             console.log(data); 
         });

@@ -30,12 +30,12 @@ table {
     width: 750px;
     border-collapse: collapse;
   
-    margin: 20px 5px 0 250px;
+    /* margin: 20px 5px 0 250px; */
 }
   
 table th {
     text-transform: uppercase;
-    text-align: left;
+    /* text-align: left; */
     background: #db8742;
     color: #FFF;
     cursor: pointer;
@@ -47,7 +47,7 @@ table th {
           background: #db8742;
         }
   table td {
-    text-align: left;
+    /* text-align: left; */
     padding: 8px;
 
   }
