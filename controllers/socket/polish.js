@@ -17,11 +17,13 @@ module.exports = function(namespaces){
         });
 
         socket.on('sendtoantique', (data) => {
-            console.log(data); 
+            for(let i in data)
+                require('../../modele/dept/sendToAntique')(data[i], 1); 
         });
 
         socket.on('sendtopowder', (data) => {
-            console.log(data); 
+            for(let i in data)
+                require('../../modele/dept/sendToPowder')(data[i], 1); 
         });
 
         socket.on('finish', (data) => {
