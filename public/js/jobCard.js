@@ -59,7 +59,10 @@ Vue.component('jobcard', {
         departments: Array,
         department:{},
         type:{},
-        esttime:{}
+        esttime:{},
+        colourin:{},
+        colourout:{},
+        comment:{}
     }
 });
 
@@ -74,7 +77,10 @@ var jobcard = new Vue({
         departments: departments,
         department: {name:''},
         type: {name: ''},
-        estTime:{time: '00:00:00' }
+        estTime: {time: '00:00:00|00:00:00|00:00:00' },
+        colourIn: {name:''},
+        colourOut: {name:''},
+        comment: {name:''}
     },
     watch: {
         'department.name': function(){
@@ -83,56 +89,23 @@ var jobcard = new Vue({
     },
     methods: {
         calcTime: function(){
-            switch(this.department.name){
-                case 'Antiquing':   
-                    var m = moment('00:00:00','HH:mm:ss');
-                    for(let entry in this.gridData){
-                        let tmp = this.gridData[entry].time.split('|');
-                        if(tmp.length == 3){
-                            var hms = tmp[0].split(':');
-                            var duration = moment.duration({
-                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
-                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
-                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
-                            });
-                            m.add(duration);
-                            this.estTime.time = m.format('HH:mm:ss');
-                        }
+            for(let entry in this.gridData){
+                let tmp = this.gridData[entry].time.split('|');
+                if(tmp.length == 3){
+                    let aux = [];
+                    for(let i=0 ; i < tmp.length ; i++){
+                        let m = moment('00:00:00','HH:mm:ss');
+                        let hms = tmp[i].split(':');
+                        let duration = moment.duration({
+                            hours:parseInt(hms[0])*this.gridData[entry].Quantity,
+                            minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
+                            seconds:parseInt(hms[2])*this.gridData[entry].Quantity
+                        });
+                        m.add(duration);
+                        aux.push(m.format('HH:mm:ss'));
                     }
-                    break;
-                case 'Powder Coating':
-                    var m = moment('00:00:00','HH:mm:ss');
-                    for(let entry in this.gridData){
-                        let tmp = this.gridData[entry].time.split('|');
-                        if(tmp.length == 3){
-                            var hms = tmp[1].split(':');
-                            var duration = moment.duration({
-                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
-                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
-                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
-                            });
-                            m.add(duration);
-                            this.estTime.time = m.format('HH:mm:ss');
-                        }
-                       
-                    }
-                    break;
-                case 'Polishing':
-                    var m = moment('00:00:00','HH:mm:ss');
-                    for(let entry in this.gridData){
-                        let tmp = this.gridData[entry].time.split('|');
-                        if(tmp.length == 3){
-                            var hms = tmp[2].split(':');
-                            var duration = moment.duration({
-                                hours:parseInt(hms[0])*this.gridData[entry].Quantity,
-                                minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
-                                seconds:parseInt(hms[2])*this.gridData[entry].Quantity
-                            });
-                            m.add(duration);
-                            this.estTime.time = m.format('HH:mm:ss');
-                        }
-                    }
-                    break;
+                    this.estTime.time = "" + aux[0] + '|' + aux[1] + '|' + aux[2];
+                }
             }
         }
     }
@@ -224,7 +197,10 @@ var sendNewJC = function(){
         'dueDate': jobcard.dueDate,
         'type': jobcard.type,
         'order': jobcard.orders,
-        'estimationTime': jobcard.estTime.time
+        'estimationTime': jobcard.estTime.time,
+        'colourIn':jobcard.colourIn.name,
+        'colourOut':jobcard.colourOut.name,
+        'comment':jobcard.comment.name,
     };
     socket.emit('newJob',jC);
 }

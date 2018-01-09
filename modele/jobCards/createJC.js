@@ -45,7 +45,15 @@ module.exports = function(jC, callback){
     //via moment put the today date for the start date
     tmp.start_date = moment().format('YYYY-MM-DD HH:mm:ss');
 
+    //add the in colour
+    tmp.colour_in = jC.colourIn;
+    
+    //add the out colour
+    tmp.colour_out = jC.colourOut;
 
+    //add the comment
+    tmp.note = jC.comment;
+    console.log(tmp);
     var con = require('../connexion/db_connexion')();
     con.connect(function(err){
             if(err) {
