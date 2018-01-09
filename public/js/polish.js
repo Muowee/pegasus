@@ -15,7 +15,7 @@ socket.on('jobs',(data)=>{
         for( let key in data[jb]){
             tmp[key] = data[jb][key];
         }
-        tmp["priority"]=0;
+        tmp["priority"]=4;
         console.log(tmp);
         job.push(tmp);
     }

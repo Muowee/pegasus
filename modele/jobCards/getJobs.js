@@ -18,7 +18,10 @@ module.exports = function(dept, callback){
                     orders: results[job].orders,
                     bin: results[job].bin,
                     finished: results[job].type,
-                    due_date: results[job].due_date
+                    due_date: results[job].due_date,
+                    colour_in: results[job].colour_in,
+                    colour_out: results[job].colour_out,
+                    note: results[job].note
                 };
 
                 tmp.push(tmpJob);

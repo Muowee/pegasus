@@ -178,7 +178,7 @@
               <table >
                 <thead>
                   <tr>
-                    <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
+                    <th v-for="col in columns" v-on:click="sortTable(col)"  v-if="((col != 'colour_in')&&(col != 'colour_out'))">{{col}}
                       <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
                     </th>
                     <th>action</th>
@@ -193,6 +193,7 @@
                     <td> {{row.bin}} </td>
                     <td> {{row.finished}} </td>
                     <td> {{row.due_date}} </td>
+                    <td> {{row.note}} </td>
                     <td>
                         <input    type="input" v-model="row.priority" :data-value="row.id"/>
                     </td>

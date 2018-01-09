@@ -56,6 +56,9 @@
                     :department="department"
                     :type="type"
                     :esttime="estTime"
+                    :colourin="colourIn"
+                    :colourout="colourOut"
+                    :comment="comment"
                     >
                 </jobcard>
             </div>
@@ -121,8 +124,15 @@
                     <span class="noEdit">{{bin.bin}}</span>
                     <input type="text" class="edit" v-model="bin.bin"/> 
                 </td>
-                <td colspan="3" class="custom">
-                    Estimation Time: {{esttime.time}}
+                
+                <td colspan="3" class="custom" v-if="department.name == 'Antiquing'">
+                    Estimation Time: {{esttime.time.split('|')[0]}}
+                </td>
+                <td colspan="3" class="custom" v-else-if="department.name == 'Powder Coating'">
+                    Estimation Time: {{esttime.time.split('|')[1]}}
+                </td>
+                <td colspan="3" class="custom" v-else="department.name == 'Polishing'">
+                    Estimation Time: {{esttime.time.split('|')[2]}}
                 </td>
                 
             </tr>
@@ -152,6 +162,29 @@
                         <input id="input_select2" type="hidden" v-model="date.date"/>
                 </td>
                     
+            </tr>
+                <td class="custom">
+                    <span class="edit">
+                        Colour In: <input type="text" v-model="colourin.name"/>
+                    </span>
+                    <span class="noEdit">Colour In: {{colourin.name}}</span>
+                </td>
+
+                <td class="custom">
+                    <span class="edit">
+                        Colour Out: <input type="text" v-model="colourout.name"/>
+                    </span>
+                    <span class="noEdit">Colour Out: {{colourout.name}}</span>
+                </td>
+
+                <td colspan="3" class="custom">
+                    <span class="edit">
+                        Comment: <textarea maxlength="70"  v-model="comment.name"></textarea>
+                    </span>
+                    <span class="noEdit" style="white-space: pre-line;">Comment: {{comment.name}}</span>
+                </td>
+            <tr>
+
             </tr>
         </tbody>
     </table>
