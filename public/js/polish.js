@@ -20,7 +20,7 @@ socket.on('jobs',(data)=>{
 });
 
 socket.on('newJob',(data)=>{
-    console.log(data);
+    // console.log(data);
     for(let jb in data){
         let tmp = {};
         for( let key in data[jb]){

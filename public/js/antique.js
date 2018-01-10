@@ -27,7 +27,7 @@ socket.on('newJob',(data)=>{
             tmp[key] = data[jb][key];
         }
         tmp["priority"]=4;
-        // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO THE TABLE USE Vue.set(object, key, objecttoadd) insead
+        // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO UPDATE THE TABLE USE Vue.set(object, key, objecttoadd) insead
         Vue.set(TableAntique.rows, TableAntique.rows.length, tmp);
     }
 });
