@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<div class="navbar-fixed">
+<div class="navbar">
     <nav class="black" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -61,104 +61,6 @@
 
  <!-- body -->
 
-
-
-
-    <!-- <div class="row">
-        <div class="col s6">
-      	    <ul class="collapsible" data-collapsible="accordion">
-                <li>
-                    <div class="collapsible-header">
-                        <i class="material-icons">label_outline</i>
-                            20210
-                        <i class="new badge"></i>
-                        <ul id="dropdown2" class="dropdown-content"> 
-                            <li><a href="#!">Antique</a></li>
-                            <li><a href="#!">Powder Coating</a></li>
-                            <li><a href="#!">Finish process</a></li>
-                        </ul>
-                        <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Process<i class="material-icons right">arrow_drop_down</i></a>
-                    </div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                        <i class="material-icons">label_outline</i>
-                        20225
-                        <span class="new badge"></span>
-                    </div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                        <i class="material-icons">label_outline</i>
-                        50522
-                        <span class="new badge"></span>
-                    </div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    60220
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    85000
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    45000
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    14520
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    85420
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    48508
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                    <i class="material-icons">label_outline</i>
-                    84520
-                    <span class="new badge"></span></div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-                </li>
-
-                <ul class="pagination">
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li class="waves-effect"><a href="#!">2</a></li>
-                    <li class="waves-effect"><a href="#!">3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
-            </ul>
-        </div> -->
         
 <div class="container">
         <div class="fixed-action-btn toolbar">
@@ -174,39 +76,39 @@
               </div>
     <div class="row">          
         <div class="col s12">
-                
             <div id="Tableantique">
-              <table >
-                <thead>
-                  <tr>
-                    <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
-                      <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
-                    </th>
-                     <th>action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr id="source" v-for="row in rows">
-                    <td> {{row.id}} </td>
-                    <td> {{row.PulledDate}} </td>
-                    <td> {{row.Qty}} </td>
-                    <td> {{row.Finished}} </td>
-                    <td> {{row.Bin}} </td>
-                    <td> {{row.DueDate}} </td>
-                    <td>
-                        <input    type="input" v-model="row.priority" :data-value="row.id"/>
-                    </td>
-                    <td>
-                        <p>
-                            <input class='checkbox' type="checkbox" :id="row.id" />
-                            <label :for="row.id"></label>
-                        </p>
-                    </td>
-                    
-                  </tr>
-                </tbody>
-             </table>
-             
+                <table >
+                    <thead>
+                    <tr>
+                        <th v-for="col in columns" v-on:click="sortTable(col)"  v-if="((col != 'colour_in')&&(col != 'colour_out'))">{{col}}
+                        <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
+                        </th>
+                        <th>action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="source" v-for="row in rows">
+                        <td> {{row.id}} </td>
+                        <td> {{row.estimated_time.split('|')[2]}}</td>
+                        <td> {{row.pulled_date}} </td>
+                        <td> {{row.orders}} </td>
+                        <td> {{row.bin}} </td>
+                        <td> {{row.finished}} </td>
+                        <td> {{row.due_date}} </td>
+                        <td> {{row.note}} </td>
+                        <td>
+                            <input    type="input" v-model="row.priority" :data-value="row.id"/>
+                        </td>
+                        <td>
+                            <p>
+                                <input class='checkbox' type="checkbox" :id="row.id" />
+                                <label :for="row.id"></label>
+                            </p>
+                        </td>
+                        
+                    </tr>
+                    </tbody>
+                </table>
             
            </div>
 
@@ -217,7 +119,10 @@
     </div>
 </div>
    
- 
+    <br>
+    <br>
+    <br>
+    <br>
 
 
   

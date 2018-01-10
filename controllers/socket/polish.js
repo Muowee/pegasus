@@ -18,12 +18,15 @@ module.exports = function(namespaces){
 
         socket.on('sendtoantique', (data) => {
             for(let i in data)
-                require('../../modele/dept/sendToAntique')(data[i], 1); 
+                require('../../modele/dept/sendToAntique')(data[i], 1);
+            namespaces.ant.emit('newJob',data);
+            
         });
 
         socket.on('sendtopowder', (data) => {
             for(let i in data)
                 require('../../modele/dept/sendToPowder')(data[i], 1); 
+            namespaces.powCoat.emit('newJob',data);
         });
 
         socket.on('finish', (data) => {

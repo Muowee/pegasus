@@ -1,43 +1,45 @@
-var socket = io('/polish');
+var socket = io('/antique');
 socket.on('connect', function(data) {
-   socket.emit('join', 'Hello World from client');
+    socket.emit('getJobs');
 });
 
 socket.on('message',(data)=>{
     console.log(data);
 });
 
-var Tablepolish = new Vue({
+var job = [];
+
+socket.on('jobs',(data)=>{
+    for(let jb in data){
+        let tmp = {};
+        for( let key in data[jb]){
+            tmp[key] = data[jb][key];
+        }
+        tmp["priority"]=4;
+        job.push(tmp);
+    }
+});
+
+socket.on('newJob',(data)=>{
+    for(let jb in data){
+        let tmp = {};
+        for( let key in data[jb]){
+            tmp[key] = data[jb][key];
+        }
+        tmp["priority"]=4;
+        // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO THE TABLE USE Vue.set(object, key, objecttoadd) insead
+        Vue.set(TableAntique.rows, TableAntique.rows.length, tmp);
+    }
+});
+
+var TableAntique = new Vue({
     el: '#Tableantique',
     data: {
       currentPage: 1,
       elementsPerPage: 20000000,
       ascending: false,
       sortColumn: '',
-      rows: [
-        { id: 1,PulledDate:"21/12/2017", Qty: "5", Finished: 'Antique Silver' ,Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 2,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Brass',Bin:'2737',DueDate: '21/12/2017'  , priority:'' },
-        { id: 3,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 4,PulledDate:"21/12/2017", Qty: "9", Finished: 'Antique Brass',Bin:'2737',DueDate: '21/12/2017'  , priority:'' },
-        { id: 5,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 6,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 32,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 7,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 8,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 9,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017' , priority:'' },
-        { id: 10,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 11,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 12,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 13,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 14,PulledDate:"21/12/2017", Qty: "3", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 15,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 16,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 17,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 18,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 19,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 20,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-        { id: 21,PulledDate:"21/12/2017", Qty: "8", Finished: 'Antique Silver',Bin:'2737',DueDate: '21/12/2017', priority:'' },
-      ]
+      rows: job
     },
     methods: {
       "sortTable": function sortTable(col) {
@@ -88,12 +90,9 @@ $(document).ready(()=>{
         $(this).attr("data-value");
     });
     
-    
-
-    
       // Alert
     
-      Materialize.toast('Welcome to the Antique Department!', 4000)
+      Materialize.toast('Welcome to the Antique Department!', 2000)
 
 
       // Uncheked bottom
@@ -107,13 +106,15 @@ $(document).ready(()=>{
         var jobs = [];
         $(".checkbox:checked").each(function(){
             var thus = this;
-            jobs.push( Tablepolish.rows.filter(rows => rows.id == $(thus).attr("id"))[0] );
+            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            delete tmp.priority;
+            jobs.push(tmp);
             $(this).prop("checked",false);
             
         });
         if(confirm("Are you sure?")){
             for(let job in jobs)
-                Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
+                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
 
         }
@@ -122,32 +123,33 @@ $(document).ready(()=>{
 
     // Send to Powder Coating, reference in the table
     $("#move_powder").click(function(){
-      var jobs = [];
-      $(".checkbox:checked").each(function(){
-        var thus = this;
-        jobs.push(Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0]);
-        $(this).prop("checked",false);
-      });
-      if(confirm("Are you sure?")){
-        for(let job in jobs)
-          Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
-        socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
-      }
+        var jobs = [];
+        $(".checkbox:checked").each(function(){
+            var thus = this;
+            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            delete tmp.priority;
+            jobs.push(tmp);
+            $(this).prop("checked",false);
+        });
+        if(confirm("Are you sure?")){
+            for(let job in jobs)
+                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
+            socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
+        }
     });
     // Finish process
     $("#finish").click(function(){
-      var jobs = []
-      $(".checkbox:checked").each(function(){
-        var thus = this;
-        jobs.push(Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0]);
-        $(this).prop("checked",false);
-      });
-      if(confirm("Do you want to finish the process?")){
-        for(job in jobs)
-        Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
-        socket.emit($(this).attr('id'),jobs);
-      }
+        var jobs = []
+        $(".checkbox:checked").each(function(){
+            var thus = this;
+            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            delete tmp.priority;
+            $(this).prop("checked",false);
+        });
+        if(confirm("Do you want to finish the process?")){
+            for(job in jobs)
+                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
+            socket.emit($(this).attr('id'),jobs);
+        }
     });
- 
-
 });
