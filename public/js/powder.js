@@ -1,4 +1,4 @@
-var socket = io('/powder');
+var socket = io('/powder-coated');
 socket.on('connect', function(data) {
     socket.emit('getJobs');
 });
@@ -26,7 +26,7 @@ socket.on('newJob',(data)=>{
             tmp[key] = data[jb][key];
         }
         tmp["priority"]=4;
-        job.push(tmp);
+        Vue.set(Tablepowder.rows, Tablepowder.rows.length, tmp);
     }
 })
 

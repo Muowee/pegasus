@@ -15,6 +15,7 @@ module.exports = function(io){
     var jobCard = require('./jobCard')(namespaces);
     var polish = require('./polish')(namespaces);
     var antique = require('./antique')(namespaces);
+    var poweder = require('./powder')(namespaces);
     var statistics = require('./statistics')(namespaces);
 
 }
