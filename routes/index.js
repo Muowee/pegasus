@@ -22,6 +22,10 @@ module.exports = function(app){
         res.sendFile('statistics.html', { root: root_folder });
     });
 
+    app.get('/powder', (req,res)=>{
+        res.sendFile('powder.html', { root: root_folder });
+    });
+
     app.use(express.static('node_modules', { root: root_folder }));
 
     app.use(express.static('public',{root: root_folder}));
