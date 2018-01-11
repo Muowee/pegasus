@@ -3,10 +3,6 @@ socket.on('connect', function(data) {
     socket.emit('getJobs');
 });
 
-socket.on("disconnect",()=>{
-    location.reload(); 
-});
-
 socket.on('message',(data)=>{
     console.log(data);
 });
