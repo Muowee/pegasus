@@ -21,13 +21,14 @@
                    <li><a href="/jobcard">JobCard</a></li>
                    <li class="active"><a class="dropdown-button" href="#!" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
                    <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>                  
-                   <i class="material-icons white-text"><a href="/statistics">add</a></i>
+                   <i class="large material-icons"><a href="/statistics">insert_chart</a></i>
                </ul>
                <!-- navbar -->
                <ul id="pages" class="dropdown-content">
                    <li><a href="/polish">Polish</a></li>
                    <li><a href="/antique">Antique</a></li>
                    <li><a href="/powder">Powder Coating</a></li>
+                   <li><a href="/edit">Edit</a></li>
                </ul>
                <a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons white-text">menu</i></a>
            </div>
@@ -44,6 +45,7 @@
                             <li><a href="/polish">Polish</a></li>
                             <li><a href="/antique">Antique</a></li>
                             <li><a href="/powder">Powder coating</a></li>
+                            <li><a href="/edit">Edit</a></li>
                         </ul>
                     </div>
                 </li>
@@ -56,7 +58,40 @@
 
 
     <!-- body -->
-    <div class="section no-pad-bot" id="index-banner">
+
+        <div class="row">
+            <div class="col s12">
+                <div id="Tablejobcard">
+                        <table >
+                          <thead>
+                            <tr>
+                              <th v-for="col in columns" v-on:click="sortTable(col)"  v-if="((col != 'colour_in')&&(col != 'colour_out'))">{{col}}
+                                <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
+                              </th>
+                              <th>action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr id="source" v-for="row in rows">
+                              <td> {{row.id}} </td>
+                              <td> {{row.estimated_time.split('|')[2]}}</td>
+                              <td> {{row.pulled_date}} </td>
+                              <td> {{row.orders}} </td>
+                              <td> {{row.bin}} </td>
+                              <td> {{row.finished}} </td>
+                              <td>{{row.colour_in}}</td>
+                              <td>{{row.colour_out}}</td>
+                              <td> {{row.due_date}} </td>
+                              <td> {{row.note}} </td>                              
+                            </tr>
+                          </tbody>
+                       </table>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br><br>
                 
@@ -64,7 +99,7 @@
              
             <br><br>
         </div>
-    </div>
+    </div> -->
 
     <footer class="page-footer black">
         <div class="container">
@@ -94,7 +129,7 @@
   
     <!-- Initialization script -->
     <script src="js/lib/startup.js"></script>
-    <!-- <script src="js/lib/init.js"></script> -->
+    <script src="js/lib/init.js"></script>
     <!-- custom lib -->
     <script src="js/index.js"></script>
 </body>
