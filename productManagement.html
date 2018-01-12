@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Product Management</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- CSS  -->
+    <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
+    <link href="css/product.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+</head>
+<body>
+<div class="navbar-fixed">
+    <nav class="black navbar-fixed-top" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="red-text"><b>Product Management<b></li>  		
+                <li><a href="/jobcard">JobCard</a></li>
+                <li class="active"><a class="dropdown-button" href="#" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+            </ul>
+      
+    <!-- navbar -->
+
+            <ul id="pages" class="dropdown-content">
+                <li><a href="/polish">Polish</a></li>
+                <li><a href="/antique">Antique</a></li>
+                <li><a href="/powder">Powder Coating</a></li>
+            </ul>
+
+            <a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons white-text">menu</i></a>
+        </div>
+    </nav>
+</div>  
+    <ul id="slide-out" class="side-nav">
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-teal active">Pages</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="/polish">Polish</a></li>
+                            <li><a href="/antique">Antique</a></li>
+                            <li><a href="/powder">Powder coating</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><a class="waves-effect waves-teal" href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+    </ul>
+
+
+ <!-- body -->
+        
+<div class="container">
+        <div class="fixed-action-btn toolbar">
+                <a class="btn-floating btn-large orange darken-3">
+                  <i class="large material-icons">mode_edit</i>
+                </a>
+                <ul>
+                  <li id="change" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Change</a></li>
+                  <li id="remove" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Remove</a></li>
+                  <li id="add" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Add</a></li>
+                </ul>
+              </div>
+    <div class="row">          
+        <div class="col s12">
+                
+            <div id="Tableproduct">
+              <table >
+                <thead>
+                  <tr>
+                    <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
+                      <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
+                    </th>
+                    <th>action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="source" v-for="row in rows">
+                    <td> {{row.id}} </td>
+                    <td>
+                        
+                        <input type="text" class="edit" v-model="row.Name" onchange="check(this);" :data-value="row.id"/> 
+                    </td>
+                    <td> 
+                        <input type="text" class="edit" v-model="row.Description" onchange="check(this);" :data-value="row.id"/> 
+                    </td>
+                    <td> 
+                        <input type="text" class="edit" v-model="row.Antiquing" onchange="check(this);" :data-value="row.id"/> 
+                    </td>
+                    <td> 
+                        <input type="text" class="edit" v-model="row.Powder_Coating" onchange="check(this);" :data-value="row.id"/> 
+                    </td>
+                    <td> 
+                        <input type="text" class="edit" v-model="row.Polishing" onchange="check(this);" :data-value="row.id"/> 
+                    </td>
+                    <td>
+                        <p>
+                            <input class='checkbox' type="checkbox" :id="row.id" />
+                            <label :for="row.id"></label>
+                        </p>
+                    </td>
+                    
+                  </tr>
+                </tbody>
+             </table>
+             
+            
+           </div>
+
+            
+
+        </div>
+
+    </div>
+</div>
+   
+ 
+
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <!-- footer -->
+ 
+
+   <footer class="page-footer black">
+      <div class="container">
+        <div class="row">
+          <div class="col s6 m3">
+            <!-- <img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""> -->
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="../jquery/dist/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/materialize-css/dist/js/materialize.js"></script>
+    <script src="/js/lib/vue.js"></script>
+    
+    
+    <!-- External libraries -->
+    <script src="js/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="js/lib/masonry.pkgd.min.js"></script>
+    <script src="js/lib/TweenMax.min.js"></script>
+    <script src="js/lib/ScrollMagic.min.js"></script>
+    <script src="js/lib/animation.gsap.min.js"></script>
+
+    <!-- Initialization script -->
+    <script src="js/lib/startup.js"></script>
+
+    <!-- custom -->
+    <script src="js/products.js"></script>
+  </body>
+</html>
