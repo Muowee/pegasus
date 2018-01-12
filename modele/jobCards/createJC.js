@@ -86,25 +86,32 @@ module.exports = function(jC, callback){
                         console.error("Error while inserted in assoc_component ");
                     });
                 }
-                con.commit(function(err) {
+                sql = 'INSERT INTO assoc_dept SET ?';
+                con.query(sql,[{"id_job":insertId,"id_dept":tmp.id_dept}], function(err){
                     if (err) { 
-                      con.rollback(function() {
-                        console.error("Error while commit");
-                      });
+                        con.rollback(function(err) {
+                            console.error("Error while inserted in assoc_dept ");
+                        });
                     }
-                    console.log('Transaction Complete.');
-                    con.end();
-                    
-                    //reformat for view
-                    tmp["estimated_time"] = jC.estimated_time;
-                    tmp.due_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('DD-MM-YYYY');
-                    tmp.pulled_date = moment().format('DD-MM-YYYY HH:mm:ss');
-
-                    //return the temp object (that is the jobcard)
-                    return callback(tmp);
-                })
+                    con.commit(function(err) {
+                        if (err) { 
+                          con.rollback(function() {
+                            console.error("Error while commit");
+                          });
+                        }
+                        console.log('Transaction Complete.');
+                        con.end();
+                        
+                        //reformat for view
+                        tmp["estimated_time"] = jC.estimated_time;
+                        tmp.due_date = moment(jC.dueDate.date,'DD-MM-YYYY').format('DD-MM-YYYY');
+                        tmp.pulled_date = moment().format('DD-MM-YYYY HH:mm:ss');
+    
+                        //return the temp object (that is the jobcard)
+                        return callback(tmp);
+                    });
+                });
             });
         });
     });
-   
 }

@@ -10,16 +10,27 @@ module.exports = function(namespaces){
             socket.broadcast.emit('message',data);
         });
 
+        socket.on('getJobs',()=>{
+            require('../../modele/dept/getJobs')(2, (jobs)=>{
+                socket.emit('jobs',jobs);
+            });
+        });
+
         socket.on('sendtopolish',(data) => {
-            console.log(data)
+            for(let i in data)
+                require('../../modele/dept/sendToPolish')(data[i], 2);
+                namespaces.pol.emit('newJob',data);
         });
 
         socket.on('sendtopowder',(data) => {
-            console.log(data)
+            for(let i in data)
+                require('../../modele/dept/sendToPowder')(data[i], 2); 
+                namespaces.powCoat.emit('newJob',data);
         });
 
         socket.on('finish',(data) => {
-            console.log(data)
+            for(let i in data)
+                require('../../modele/dept/endJob')(data[i].id, 2);
         });
     });
 
