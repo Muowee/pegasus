@@ -1,6 +1,6 @@
 module.exports = function(namespaces){
     
-    namespaces.pol.on('connection', (socket)=>{
+    namespaces.prod.on('connection', (socket)=>{
         console.log("A client is connected");
         socket.emit('message', 'You are connected to polish department!!');
             
@@ -10,23 +10,21 @@ module.exports = function(namespaces){
             socket.broadcast.emit('message',data);
         });
 
-        socket.on('getJobs',()=>{
-            require('../../modele/dept/getJobs')(1, (jobs)=>{
-                socket.emit('jobs',jobs);
+        socket.on('getProduct',()=>{
+            require('../../modele/product/getProduct')((products)=>{
+                socket.emit('products',products);
             });
         });
 
-        socket.on('sendtoantique', (data) => {
+        socket.on('remove', (data) => {
             for(let i in data)
-                require('../../modele/dept/sendToAntique')(data[i], 1);
-            namespaces.ant.emit('newJob',data);
-            
+                require('../../modele/product/remove')(data[i].id);
         });
 
-        socket.on('sendtopowder', (data) => {
+        socket.on('replace', (data) => {
             for(let i in data)
-                require('../../modele/dept/sendToPowder')(data[i], 1); 
-            namespaces.powCoat.emit('newJob',data);
+                require('../../modele/product/replace')(data[i]); 
+            
         });
 
         socket.on('finish', (data) => {

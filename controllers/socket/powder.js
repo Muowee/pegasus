@@ -1,8 +1,8 @@
 module.exports = function(namespaces){
     
-    namespaces.pol.on('connection', (socket)=>{
+    namespaces.powCoat.on('connection', (socket)=>{
         console.log("A client is connected");
-        socket.emit('message', 'You are connected to polish department!!');
+        socket.emit('message', 'You are connected to statistic department!!');
             
         socket.broadcast.emit('message', 'Another client has just connected!');
         socket.on('message', (data) => {
@@ -11,29 +11,27 @@ module.exports = function(namespaces){
         });
 
         socket.on('getJobs',()=>{
-            require('../../modele/dept/getJobs')(1, (jobs)=>{
+            require('../../modele/dept/getJobs')(3, (jobs)=>{
                 socket.emit('jobs',jobs);
             });
         });
 
         socket.on('sendtoantique', (data) => {
             for(let i in data)
-                require('../../modele/dept/sendToAntique')(data[i], 1);
+                require('../../modele/dept/sendToAntique')(data[i], 3);
             namespaces.ant.emit('newJob',data);
             
         });
 
-        socket.on('sendtopowder', (data) => {
+        socket.on('sendtopolish', (data) => {
             for(let i in data)
-                require('../../modele/dept/sendToPowder')(data[i], 1); 
+                require('../../modele/dept/sendToPolish')(data[i], 3); 
             namespaces.powCoat.emit('newJob',data);
         });
 
         socket.on('finish', (data) => {
             for(let i in data)
-                require('../../modele/dept/endJob')(data[i].id, 1);
+                require('../../modele/dept/endJob')(data[i].id, 3);
         });
-
     });
-
 }

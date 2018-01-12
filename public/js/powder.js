@@ -1,4 +1,4 @@
-var socket = io('/antique');
+var socket = io('/powder-coated');
 socket.on('connect', function(data) {
     socket.emit('getJobs');
 });
@@ -6,7 +6,6 @@ socket.on('connect', function(data) {
 socket.on('message',(data)=>{
     console.log(data);
 });
-
 var job = [];
 
 socket.on('jobs',(data)=>{
@@ -27,13 +26,12 @@ socket.on('newJob',(data)=>{
             tmp[key] = data[jb][key];
         }
         tmp["priority"]=4;
-        // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO UPDATE THE TABLE USE Vue.set(object, key, objecttoadd) insead
-        Vue.set(TableAntique.rows, TableAntique.rows.length, tmp);
+        Vue.set(Tablepowder.rows, Tablepowder.rows.length, tmp);
     }
-});
+})
 
-var TableAntique = new Vue({
-    el: '#Tableantique',
+var Tablepowder = new Vue({
+    el: '#Tablepowder',
     data: {
       currentPage: 1,
       elementsPerPage: 20000000,
@@ -89,24 +87,23 @@ $(document).ready(()=>{
     $(".mybtn").on("click",function(){
         $(this).attr("data-value");
     });
-    
       // Alert
     
-      Materialize.toast('Welcome to the Antique Department!', 2000)
+    Materialize.toast('Welcome to the Powder Coating Department!', 4000)
 
 
       // Uncheked bottom
-      $("#clear").click(function(){
+    $("#clear").click(function(){
         $(".checkbox:checked").each(function(){
             $(this).prop("checked",false);
         });
-      });
+    });
       // Send to antique, reference in the table
-    $("#move_polish").click(function(){
+    $("#move_antique").click(function(){
         var jobs = [];
         $(".checkbox:checked").each(function(){
             var thus = this;
-            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            let tmp = Tablepowder.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
             delete tmp.priority;
             jobs.push(tmp);
             $(this).prop("checked",false);
@@ -114,42 +111,48 @@ $(document).ready(()=>{
         });
         if(confirm("Are you sure?")){
             for(let job in jobs)
-                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
+                Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
 
         }
     // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
     });
 
-    // Send to Powder Coating, reference in the table
-    $("#move_powder").click(function(){
-        var jobs = [];
-        $(".checkbox:checked").each(function(){
-            var thus = this;
-            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
-            delete tmp.priority;
-            jobs.push(tmp);
-            $(this).prop("checked",false);
-        });
-        if(confirm("Are you sure?")){
-            for(let job in jobs)
-                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
-            socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
-        }
+    // Send to Polish department, reference in the table
+    $("#move_polish").click(function(){
+      let jobs = [];
+      $(".checkbox:checked").each(function(){
+        var thus = this;
+        let tmp = Tablepowder.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+        delete tmp.priority;
+        jobs.push(tmp);
+        $(this).prop("checked",false);
+      });
+      if(confirm("Are you sure?")){
+        for(let job in jobs)
+          Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
+        socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
+        console.log($(this).attr('id').split('_')[1]);
+      }
     });
     // Finish process
     $("#finish").click(function(){
-        var jobs = []
-        $(".checkbox:checked").each(function(){
-            var thus = this;
-            let tmp = TableAntique.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
-            delete tmp.priority;
-            $(this).prop("checked",false);
-        });
-        if(confirm("Do you want to finish the process?")){
-            for(job in jobs)
-                TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
-            socket.emit($(this).attr('id'),jobs);
-        }
+      var jobs = []
+      $(".checkbox:checked").each(function(){
+        var thus = this;
+        let tmp = Tablepowder.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+        delete tmp.priority;
+        jobs.push(tmp);
+        $(this).prop("checked",false);
+      });
+      if(confirm("Do you want to finish the process?")){
+        for(job in jobs)
+        Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
+        socket.emit($(this).attr('id'),jobs);
+        
+      }
     });
+ 
+
 });
+
