@@ -90,7 +90,7 @@ $(document).ready(()=>{
     });
       // Alert
     
-    Materialize.toast('Welcome to the Polish Department!', 2000)
+    Materialize.toast('Welcome to the product management section!', 2000)
 
 
       // Uncheked bottom
