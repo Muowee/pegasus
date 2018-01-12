@@ -65,23 +65,27 @@
                         <table >
                           <thead>
                             <tr>
-                              <th v-for="col in columns" v-on:click="sortTable(col)"  v-if="((col != 'colour_in')&&(col != 'colour_out'))">{{col}}
+                              <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
                                 <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
                               </th>
-                              <th>action</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr id="source" v-for="row in rows">
                               <td> {{row.id}} </td>
-                              <td> {{row.estimated_time.split('|')[2]}}</td>
+                              <!-- <td v-if="row.department == 'Polishing' "> {{row.estimated_time.split('|')[2]}}</td>
+                              <td v-else-if="row.department == 'Antiquing' "> {{row.estimated_time.split('|')[0]}}</td>
+                              <td v-else="row.department == 'Powder Coating' "> {{row.estimated_time.split('|')[1]}}</td> -->
                               <td> {{row.pulled_date}} </td>
                               <td> {{row.orders}} </td>
                               <td> {{row.bin}} </td>
+                              <td> {{row.department}} </td>
+                              <td> {{row.qty}} </td>
+                              <td> {{row.products}} </td>
                               <td> {{row.finished}} </td>
-                              <td>{{row.colour_in}}</td>
-                              <td>{{row.colour_out}}</td>
                               <td> {{row.due_date}} </td>
+                              <td> {{row.colour_in}}</td>
+                              <td> {{row.colour_out}}</td>
                               <td> {{row.note}} </td>                              
                             </tr>
                           </tbody>

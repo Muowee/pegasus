@@ -9,6 +9,12 @@ module.exports = function(namespaces){
             console.log(data); 
             socket.broadcast.emit('message',data);
         });
+
+        socket.on('getJobs',()=>{
+            require('../../modele/jobCards/getAllJobs')((jobs)=>{
+                socket.emit('jobs',jobs);
+            });
+        });
     });
 
 }
