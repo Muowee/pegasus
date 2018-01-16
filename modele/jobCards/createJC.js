@@ -10,6 +10,7 @@ module.exports = function(jC, callback){
         tmp["components"] += jC.jobs[job].id + '|';
         param.push([jC.jobs[job].id, jC.jobs[job].Quantity, jC.jobs[job].Part]);
     }
+    
     //remove the last pipe
     tmp.components = tmp.components.slice(0,-1);
 

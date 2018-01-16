@@ -10,10 +10,17 @@ socket.on('message',(data)=>{
     console.log(data);
 });
 
+//when a new product arrives refresh the page to refresh the list of product
+socket.on('newProduct',()=>{ 
+    location.reload() 
+});
+
 socket.on('products',(data)=>{
     products = data;
+    //object for autocomplete {key:path of picture}
+    //--------------------------^ is the string where you are looking
     for(index in data)
-        options[data[index].Description] = null;
+        options[data[index].Name] = null;
 
     $('input.autocomplete').autocomplete({
         data: options,

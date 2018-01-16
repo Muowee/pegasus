@@ -16,7 +16,7 @@ module.exports = function(namespaces){
         });
 
         socket.on('newJob', (jC)=>{
-            require('../../modele/jobCards/createJC')(jC,(jobCard)=>{
+            require('../../modele/jobCards/createJC')(jC, (jobCard)=>{
                 switch(jobCard.id_dept){
                     case 1: //polish
                         delete jobCard.id_dept;

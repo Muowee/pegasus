@@ -24,7 +24,8 @@ module.exports = function(namespaces){
         socket.on('replace', (data) => {
             for(let i in data)
                 require('../../modele/product/replace')(data[i]); 
-            
+            //send a refresh the page to jobcard
+            namespaces.jbCard.emit('newProduct');
         });
 
         socket.on('finish', (data) => {
