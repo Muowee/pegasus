@@ -18,6 +18,7 @@ socket.on('jobs',(data)=>{
         tmp["priority"]=4;
         job.push(tmp);
     }
+    TableAntique.calcTime();
 });
 
 socket.on('newJob',(data)=>{
@@ -30,6 +31,7 @@ socket.on('newJob',(data)=>{
         // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO UPDATE THE TABLE USE Vue.set(object, key, objecttoadd) insead
         Vue.set(TableAntique.rows, TableAntique.rows.length, tmp);
     }
+    TableAntique.calcTime();
 });
 
 var TableAntique = new Vue({
@@ -39,9 +41,38 @@ var TableAntique = new Vue({
       elementsPerPage: 20000000,
       ascending: false,
       sortColumn: '',
-      rows: job
+      rows: job,
+      estimatedTime: '00:00:00'
     },
     methods: {
+        "calcTime": function(){
+            let time1 = 0;
+            let time2 = 0;
+            let time3 = 0;
+            for(let entry in this.rows){
+                let tmp = this.rows[entry].estimated_time.split('|');
+                if(tmp.length == 3){
+                    for(let i = 0 ; i < tmp.length ; i ++){
+                        let hms = tmp[i].split(':');
+                        switch(i){
+                            case 0:
+                                time1 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));
+                                break;
+                            case 1:
+                                time2 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
+                            case 2:
+                                time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
+                        }
+                    }
+                }
+            }
+            let aux1 = Math.floor( time1 / 3600 ) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
+            let aux2 = Math.floor( time2 / 3600 ) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
+            let aux3 = Math.floor( time3 / 3600 ) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+            this.estimatedTime = aux1;
+        },
       "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {
           this.ascending = !this.ascending;
@@ -116,7 +147,7 @@ $(document).ready(()=>{
             for(let job in jobs)
                 TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
-
+            TableAntique.calcTime();
         }
     // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
     });
@@ -135,6 +166,7 @@ $(document).ready(()=>{
             for(let job in jobs)
                 TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
+            TableAntique.calcTime();
         }
     });
     // Finish process
@@ -150,6 +182,11 @@ $(document).ready(()=>{
             for(job in jobs)
                 TableAntique.rows = TableAntique.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit($(this).attr('id'),jobs);
+            TableAntique.calcTime();
         }
     });
 });
+
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
+}

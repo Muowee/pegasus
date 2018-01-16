@@ -96,24 +96,32 @@ var jobcard = new Vue({
     },
     methods: {
         calcTime: function(){
+            let time1 = 0;
+            let time2 = 0;
+            let time3 = 0;
             for(let entry in this.gridData){
                 let tmp = this.gridData[entry].time.split('|');
                 if(tmp.length == 3){
-                    let aux = [];
-                    for(let i=0 ; i < tmp.length ; i++){
-                        let m = moment('00:00:00','HH:mm:ss');
+                    for(let i = 0 ; i < tmp.length ; i ++){
                         let hms = tmp[i].split(':');
-                        let duration = moment.duration({
-                            hours:parseInt(hms[0])*this.gridData[entry].Quantity,
-                            minutes:parseInt(hms[1])*this.gridData[entry].Quantity,
-                            seconds:parseInt(hms[2])*this.gridData[entry].Quantity
-                        });
-                        m.add(duration);
-                        aux.push(m.format('HH:mm:ss'));
+                        switch(i){
+                            case 0:
+                                time1 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;
+                                break;
+                            case 1:
+                                time2 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                                break;
+                            case 2:
+                                time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                                break;
+                        }
                     }
-                    this.estTime.time = "" + aux[0] + '|' + aux[1] + '|' + aux[2];
                 }
             }
+            let aux1 = str_pad_left(Math.floor( time1 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
+            let aux2 = str_pad_left(Math.floor( time2 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
+            let aux3 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+            this.estTime.time = "" + aux1 + '|' + aux2 + '|' + aux3;
         }
     }
 
@@ -141,8 +149,8 @@ $(document).ready(function() {
                 //manually trigger event because materialize css is not good
                 $(this)[0].dispatchEvent(new Event('input', { 'bubbles': true }));
                 if(jobcard.gridData[val].Part !==''){
-                    jobcard.gridData[val].id = products.filter(products => products.Description == thus.val())[0].id;
-                    jobcard.gridData[val].time = products.filter(products => products.Description == thus.val())[0].processTime;
+                    jobcard.gridData[val].id = products.filter(products => products.Name.trim() == thus.val())[0].id;
+                    jobcard.gridData[val].time = products.filter(products => products.Name.trim() == thus.val())[0].processTime;
 
                 }
             }
@@ -210,4 +218,8 @@ var sendNewJC = function(){
         'comment':jobcard.comment.name,
     };
     socket.emit('newJob',jC);
+}
+
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
 }

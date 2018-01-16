@@ -9,6 +9,7 @@ socket.on('message',(data)=>{
 var job = [];
 
 socket.on('jobs',(data)=>{
+    console.log(data);
     for(let jb in data){
         let tmp = {};
         for( let key in data[jb]){
@@ -17,6 +18,7 @@ socket.on('jobs',(data)=>{
         tmp["priority"]=4;
         job.push(tmp);
     }
+    Tablepolish.calcTime();
 });
 
 socket.on('newJob',(data)=>{
@@ -30,48 +32,79 @@ socket.on('newJob',(data)=>{
         // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO THE TABLE USE Vue.set(object, key, objecttoadd) insead
         Vue.set(Tablepolish.rows, Tablepolish.rows.length, tmp);
     }
+    Tablepolish.calcTime();
 });
 
 var Tablepolish = new Vue({
     el: '#Tablepolish',
     data: {
-      currentPage: 1,
-      elementsPerPage: 20000000,
-      ascending: false,
-      sortColumn: '',
-      rows: job
+        currentPage: 1,
+        elementsPerPage: 20000000,
+        ascending: false,
+        sortColumn: '',
+        rows: job,
+        estimatedTime: '00:00:00'
     },
     methods: {
-      "sortTable": function sortTable(col) {
+        "calcTime": function(){
+            let time1 = 0;
+            let time2 = 0;
+            let time3 = 0;
+            for(let entry in this.rows){
+                let tmp = this.rows[entry].estimated_time.split('|');
+                if(tmp.length == 3){
+                    for(let i = 0 ; i < tmp.length ; i ++){
+                        let hms = tmp[i].split(':');
+                        switch(i){
+                            case 0:
+                                time1 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));
+                                break;
+                            case 1:
+                                time2 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
+                            case 2:
+                                time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
+                        }
+                    }
+                }
+            }
+            let aux1 = str_pad_left(Math.floor( time1 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
+            let aux2 = str_pad_left(Math.floor( time2 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
+            let aux3 = Math.floor( time3 / 3600 ) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+            this.estimatedTime = aux3;
+        },
+
+        "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {
-          this.ascending = !this.ascending;
+            this.ascending = !this.ascending;
         } else {
-          this.ascending = true;
-          this.sortColumn = col;
+            this.ascending = true;
+            this.sortColumn = col;
         }
   
         var ascending = this.ascending;
   
         this.rows.sort(function(a, b) {
-          if (a[col] > b[col]) {
-            return ascending ? 1 : -1
-          } else if (a[col] < b[col]) {
-            return ascending ? -1 : 1
-          }
-          return 0;
+            if (a[col] > b[col]) {
+                return ascending ? 1 : -1
+            } else if (a[col] < b[col]) {
+                return ascending ? -1 : 1
+            }
+            return 0;
         })
-      },
-      "num_pages": function num_pages() {
-        return Math.ceil(this.rows.length / this.elementsPerPage);
-      },
-      "get_rows": function get_rows() {
-        var start = (this.currentPage-1) * this.elementsPerPage;
-        var end = start + this.elementsPerPage;
-        return this.rows.slice(start, end);
-      },
-      "change_page": function change_page(page) {
-        this.currentPage = page;
-      }
+        },
+        "num_pages": function num_pages() {
+            return Math.ceil(this.rows.length / this.elementsPerPage);
+        },
+        "get_rows": function get_rows() {
+            var start = (this.currentPage-1) * this.elementsPerPage;
+            var end = start + this.elementsPerPage;
+            return this.rows.slice(start, end);
+        },
+        "change_page": function change_page(page) {
+            this.currentPage = page;
+        }
     },
     computed: {
       "columns": function columns() {
@@ -115,6 +148,7 @@ $(document).ready(()=>{
             for(let job in jobs)
                 Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
+            Tablepolish.calcTime();
 
         }
     // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
@@ -134,7 +168,7 @@ $(document).ready(()=>{
         for(let job in jobs)
           Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
         socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
-        console.log($(this).attr('id').split('_')[1]);
+        Tablepolish.calcTime();
       }
     });
     // Finish process
@@ -151,7 +185,12 @@ $(document).ready(()=>{
             for(job in jobs)
                 Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit($(this).attr('id'),jobs);
+            Tablepolish.calcTime();
+            
         }
     });
 });
 
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
+}

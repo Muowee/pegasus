@@ -17,6 +17,7 @@ socket.on('jobs',(data)=>{
         tmp["priority"]=4;
         job.push(tmp);
     }
+    Tablepowder.calcTime();
 });
 
 socket.on('newJob',(data)=>{
@@ -28,6 +29,7 @@ socket.on('newJob',(data)=>{
         tmp["priority"]=4;
         Vue.set(Tablepowder.rows, Tablepowder.rows.length, tmp);
     }
+    Tablepowder.calcTime();
 })
 
 var Tablepowder = new Vue({
@@ -37,9 +39,38 @@ var Tablepowder = new Vue({
       elementsPerPage: 20000000,
       ascending: false,
       sortColumn: '',
-      rows: job
+      rows: job,
+      estimatedTime: '00:00:00'
     },
     methods: {
+      "calcTime": function(){
+        let time1 = 0;
+        let time2 = 0;
+        let time3 = 0;
+        for(let entry in this.rows){
+            let tmp = this.rows[entry].estimated_time.split('|');
+            if(tmp.length == 3){
+                for(let i = 0 ; i < tmp.length ; i ++){
+                    let hms = tmp[i].split(':');
+                    switch(i){
+                        case 0:
+                            time1 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));
+                            break;
+                        case 1:
+                            time2 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                            break;
+                        case 2:
+                            time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                            break;
+                    }
+                }
+            }
+        }
+        let aux1 = Math.floor( time1 / 3600 ) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
+        let aux2 = Math.floor( time2 / 3600 ) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
+        let aux3 = Math.floor( time3 / 3600 ) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+        this.estimatedTime = aux2;
+    },
       "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {
           this.ascending = !this.ascending;
@@ -113,7 +144,7 @@ $(document).ready(()=>{
             for(let job in jobs)
                 Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
-
+            Tablepowder.calcTime();
         }
     // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
     });
@@ -133,6 +164,7 @@ $(document).ready(()=>{
           Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
         socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
         console.log($(this).attr('id').split('_')[1]);
+        Tablepowder.calcTime();
       }
     });
     // Finish process
@@ -147,8 +179,9 @@ $(document).ready(()=>{
       });
       if(confirm("Do you want to finish the process?")){
         for(job in jobs)
-        Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
+          Tablepowder.rows = Tablepowder.rows.filter(rows => rows.id != jobs[job].id);
         socket.emit($(this).attr('id'),jobs);
+        Tablepowder.calcTime();
         
       }
     });
@@ -156,3 +189,7 @@ $(document).ready(()=>{
 
 });
 
+
+function str_pad_left(string,pad,length) {
+  return (new Array(length+1).join(pad)+string).slice(-length);
+}
