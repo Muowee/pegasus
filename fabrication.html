@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>Product Management</title>
+    <title>Fabrication</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,7 +12,7 @@
 
   <!-- CSS  -->
     <link rel = "stylesheet" type = "text/css" href="/materialize-css/dist/css/materialize.css" />
-    <link href="css/product.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/fabrication.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 
 </head>
@@ -21,11 +21,11 @@
     <nav class="black navbar-fixed-top" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img class="materialize-logo" src="/assets/images/mullan_logo.jpg" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li class="red-text"><b>Product Management<b></li>  		
+                <li class="red-text"><b>Fabrication<b></li>  		
                 <li><a href="/jobcard">JobCard</a></li>
                 <li class="active"><a class="dropdown-button" href="#" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
-                <i class="large material-icons"><a href="/statistics">insert_chart</a></i
+                <i class="large material-icons"><a href="/statistics">insert_chart</a></i>
             </ul>
       
     <!-- navbar -->
@@ -51,7 +51,7 @@
                         <ul>
                             <li><a href="/polish">Polish</a></li>
                             <li><a href="/antique">Antique</a></li>
-                            <li><a href="/powder">Powder coating</a></li>
+                            <li><a href="/powder">Powder Coating</a></li>
                             <li><a href="/fabrication">Fabrication</a></li>
                             <li><a href="/product-Management">Product Management</a></li>
                         </ul>
@@ -71,19 +71,18 @@
                   <i class="large material-icons">mode_edit</i>
                 </a>
                 <ul>
-                  <li id="change" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Change</a></li>
-                  <li id="remove" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Remove</a></li>
-                  <li id="add" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>Add</a></li>
+                  <li id="finish" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>FINISH</a></li>
+                  <li id="clear" class="waves-effect waves-light"><a href="#!"><i class="material-icons"></i>CLEAR</a></li>
                 </ul>
               </div>
     <div class="row">          
         <div class="col s12">
                 
-            <div id="Tableproduct">
+            <div id="Tablefabrication">
               <table class="responsive-table">
                 <thead>
                   <tr>
-                    <th v-for="col in columns" v-on:click="sortTable(col)">{{col}}
+                    <th v-for="col in columns" v-on:click="sortTable(col)"  v-if="((col != 'colour_in')&&(col != 'colour_out')&&(col != 'estimated_time'))">{{col}}
                       <div class="arrow" v-if="col == sortColumn" v-bind:class="[ascending ? 'arrow_up' : 'arrow_down']"></div>
                     </th>
                     <th>action</th>
@@ -92,27 +91,15 @@
                 <tbody>
                   <tr id="source" v-for="row in rows">
                     <td> {{row.id}} </td>
+                    <!-- <td> {{row.estimated_time.split('|')[2]}}</td> -->
+                    <td> {{row.pulled_date}} </td>
+                    <td> {{row.orders}} </td>
+                    <td> {{row.bin}} </td>
+                    <td> {{row.finished}} </td>
+                    <td> {{row.due_date}} </td>
+                    <td> {{row.note}} </td>
                     <td>
-                        
-                        <input type="text" class="edit" v-model="row.Name" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.Description" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.Antiquing" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.Antiquing_Machine" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.Powder_Coating" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.PC_Machine" onchange="check(this);" :data-value="row.id"/> 
-                    </td>
-                    <td> 
-                        <input type="text" class="edit" v-model="row.Polishing" onchange="check(this);" :data-value="row.id"/> 
+                        <input    type="input" v-model="row.priority" :data-value="row.id"/>
                     </td>
                     <td>
                         <p>
@@ -121,6 +108,16 @@
                         </p>
                     </td>
                     
+                  </tr>
+                  <tr>
+                      <td colspan="10" >
+                          <!-- TOTAL TIME = {{estimatedTime}} -->
+                      </td>
+                  </tr>
+                  <tr>
+                    <td colspan="10" >
+                        <!-- TOTAL WORKING TIME = {{diff_date_working_hour}} -->
+                    </td>
                   </tr>
                 </tbody>
              </table>
@@ -173,8 +170,7 @@
     <!-- Initialization script -->
     <script src="js/lib/startup.js"></script>
     <script src="js/lib/init.js"></script>
-
     <!-- custom -->
-    <script src="js/products.js"></script>
+    <script src="js/fabrication.js"></script>
   </body>
 </html>

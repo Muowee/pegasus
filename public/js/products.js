@@ -138,8 +138,10 @@ $(document).ready(()=>{
                 'id': getMax(Tableproduct.rows, "id").id + 1, 
                 'Name': '', 
                 'Description': '', 
-                'Antiquing':'00:00:00', 
-                'Powder_Coating': '00:00:00', 
+                'Antiquing':'00:00:00',
+                'Antiquing_Machine':'00:00:00', 
+                'Powder_Coating': '00:00:00',
+                'PC_Machine':'00:00:00', 
                 'Polishing':'00:00:00' 
             }
         );

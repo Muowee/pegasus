@@ -32,6 +32,9 @@ module.exports = function(jC, callback){
         case 'Powder Coating':
             tmp.id_dept = 3;
             break;
+        case 'Fabrication':
+            tmp.id_dept = 4;
+            break;
         case 'Polishing':
             tmp.id_dept = 1;
             break;

@@ -11,6 +11,7 @@ module.exports = function(io){
     namespaces.powCoat = io.of('/powder-coated');
     namespaces.stat = io.of('/statistics');
     namespaces.prod = io.of('/product');
+    namespaces.fab = io.of('/fabrication');
 
     //load socket handler modules for each namepsace
     var dashboard = require('./dashboard')(namespaces);
@@ -20,5 +21,6 @@ module.exports = function(io){
     var powder = require('./powder')(namespaces);
     var statistics = require('./statistics')(namespaces);
     var product = require('./product')(namespaces);
+    var fabrication = require('./fabrication')(namespaces);
 
 }

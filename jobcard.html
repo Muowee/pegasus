@@ -26,6 +26,7 @@
                     <li><a href="/polish">Polish</a></li>
                     <li><a href="/antique">Antique</a></li>
                     <li><a href="/powder">Powder Coating</a></li>
+                    <li><a href="/fabrication">Fabrication</a></li>
                     <li><a href="/product-Management">Product Management</a></li>
                 </ul>
 
@@ -44,6 +45,7 @@
                              <li><a href="/polish">Polish</a></li>
                              <li><a href="/antique">Antique</a></li>
                              <li><a href="/powder">Powder coating</a></li>
+                             <li><a href="/fabrication">Fabrication</a></li>
                              <li><a href="/product-Management">Product Management</a></li>
                          </ul>
                      </div>
@@ -130,7 +132,7 @@
             
 
             <tr v-for="(order,index) in orders">
-                <td v-if="index == 0">Order ID:</td>
+                <td v-if="index == 0">Order number:</td>
                 <td v-else></td>
                 <td>
                     <span class="noEdit">{{order.id}}</span>
@@ -139,7 +141,7 @@
             </tr>
 
             <tr>
-                <td class="custom">Bin:</td>
+                <td class="custom">Bin number:</td>
                 <td class="custom">
                     <span class="noEdit">{{bin.bin}}</span>
                     <input type="text" class="edit" v-model="bin.bin"/> 
@@ -160,14 +162,14 @@
             <tr>
                 <td class="custom">
                     <span class="edit">
-                        Type: <input type="text" v-model="type.name"/>
+                        Finished: <input type="text" v-model="type.name"/>
                     </span>
-                    <span class="noEdit">Type: {{type.name}}</span>
+                    <span class="noEdit">Finished {{type.name}}</span>
                 </td>
                
                 <td class="dept custom" >
-                    <span class="noEdit">Dept: {{department.name}}</span>
-                    <span class="edit">Dept:</span>
+                    <span class="noEdit">Department: {{department.name}}</span>
+                    <span class="edit">Department:</span>
                     <select>
                         <option disabled value="" selected>Please select one</option>
                         <option v-for="dept in departments">{{dept.name}}</option>
@@ -179,22 +181,22 @@
                         <span class="noEdit">Due Date: {{date.date}}</span>
                         <span class="edit">Due Date: </span>
                         <input type="text" class="edit" id="datepicker">
-                        <input id="input_select2" type="hidden" v-model="date.date"/>
+                        <input id="input_select2" type="hidden" v-model="date.date"/>  
                 </td>
-                    
+                 
             </tr>
                 <td class="custom">
                     <span class="edit">
-                        Colour In: <input type="text" v-model="colourin.name"/>
+                        Colour Inside: <input type="text" v-model="colourin.name"/>
                     </span>
-                    <span class="noEdit">Colour In: {{colourin.name}}</span>
+                    <span class="noEdit">Colour Inside: {{colourin.name}}</span>
                 </td>
 
                 <td class="custom">
                     <span class="edit">
-                        Colour Out: <input type="text" v-model="colourout.name"/>
+                        Colour Outside: <input type="text" v-model="colourout.name"/>
                     </span>
-                    <span class="noEdit">Colour Out: {{colourout.name}}</span>
+                    <span class="noEdit">Colour Outside: {{colourout.name}}</span>
                 </td>
 
                 <td colspan="3" class="custom">

@@ -30,6 +30,11 @@ module.exports = function(namespaces){
                         delete jobCard.id_dept;
                         namespaces.powCoat.emit('newJob',[jobCard]);
                         break;
+                    case 4: //Powder coating
+                        delete jobCard.id_dept;
+                        namespaces.fab.emit('newJob',[jobCard]);
+                        break;
+
                 }
             });
         });

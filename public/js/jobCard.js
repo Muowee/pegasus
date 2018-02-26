@@ -33,7 +33,9 @@ socket.on('products',(data)=>{
 var departments = [
     {name:"Antiquing"},
     {name:"Powder Coating"},
-    {name:"Polishing"}
+    {name:"Polishing"},
+    {name:"Fabrication"}
+    
 ];
 
 var job = [
@@ -76,7 +78,7 @@ Vue.component('jobcard', {
 var jobcard = new Vue({
     el:'#jbCard',
     data:{
-        gridColumns: ['Quantity','Part'],
+        gridColumns: ['Quantity','Components'],
         gridData: job,
         binNumber: {bin:''},
         orders: orders,
@@ -84,7 +86,7 @@ var jobcard = new Vue({
         departments: departments,
         department: {name:''},
         type: {name: ''},
-        estTime: {time: '00:00:00|00:00:00|00:00:00' },
+        estTime: {time: '00:00:00|00:00:00|00:00:00|00:00:00|00:00:00' },
         colourIn: {name:''},
         colourOut: {name:''},
         comment: {name:''}
@@ -99,9 +101,11 @@ var jobcard = new Vue({
             let time1 = 0;
             let time2 = 0;
             let time3 = 0;
+            // let time4 = 0;
+            // let time5 = 0;
             for(let entry in this.gridData){
                 let tmp = this.gridData[entry].time.split('|');
-                if(tmp.length == 3){
+                if(tmp.length == 5){
                     for(let i = 0 ; i < tmp.length ; i ++){
                         let hms = tmp[i].split(':');
                         switch(i){
@@ -114,6 +118,12 @@ var jobcard = new Vue({
                             case 2:
                                 time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
                                 break;
+                            // case 3:
+                            //     time4 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                            //     break;
+                            // case 4:
+                            //     time5 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                            //     break;
                         }
                     }
                 }
@@ -121,6 +131,8 @@ var jobcard = new Vue({
             let aux1 = str_pad_left(Math.floor( time1 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
             let aux2 = str_pad_left(Math.floor( time2 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
             let aux3 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+            // let aux4 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
+            // let aux5 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
             this.estTime.time = "" + aux1 + '|' + aux2 + '|' + aux3;
         }
     }

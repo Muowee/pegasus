@@ -10,7 +10,7 @@ module.exports = function(product){
             'id': product.id,
             'Name': product.Name,
             'Description': product.Description,
-            'processTime': '' + product.Antiquing + '|' + product.Powder_Coating + '|' + product.Polishing
+            'processTime': '' + product.Antiquing + '|' + product.Antiquing_Machine + '|' + product.Powder_Coating + '|' + product.PC_Machine + '|' + product.Polishing
         }, 
         function(err, results){
             if(err) throw err;

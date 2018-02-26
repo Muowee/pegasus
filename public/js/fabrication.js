@@ -1,4 +1,4 @@
-var socket = io('/polish');
+var socket = io('/fabrication');
 socket.on('connect', function(data) {
     socket.emit('getJobs');
 });
@@ -18,7 +18,7 @@ socket.on('jobs',(data)=>{
         tmp["priority"]=4;
         job.push(tmp);
     }
-    Tablepolish.calcTime();
+    Tablefabrication.calcTime();
 });
 
 socket.on('newJob',(data)=>{
@@ -30,22 +30,20 @@ socket.on('newJob',(data)=>{
         }
         tmp["priority"]=4;
         // //////////!!!!!!!!!!!!!!\\\\\\\\\\\ NEVER PUSH TO THE TABLE USE Vue.set(object, key, objecttoadd) insead
-        Vue.set(Tablepolish.rows, Tablepolish.rows.length, tmp);
+        Vue.set(Tablefabrication.rows, Tablefabrication.rows.length, tmp);
     }
-    Tablepolish.calcTime();
+    Tablefabrication.calcTime();
 });
 
-
-var Tablepolish = new Vue({
-    el: '#Tablepolish',
+var Tablefabrication = new Vue({
+    el: '#Tablefabrication',
     data: {
-        
         currentPage: 1,
         elementsPerPage: 20000000,
         ascending: false,
         sortColumn: '',
         rows: job,
-        estimatedTime: '00:00:00|00:00:00'       
+        // estimatedTime: '00:00:00'
     },
     methods: {
         "calcTime": function(){
@@ -126,7 +124,7 @@ $(document).ready(()=>{
     });
       // Alert
     
-    Materialize.toast('Welcome to the Polish Department!', 2000)
+    Materialize.toast('Welcome to the Fabrication Department!', 2000)
 
 
       // Uncheked bottom
@@ -140,7 +138,7 @@ $(document).ready(()=>{
         var jobs = [];
         $(".checkbox:checked").each(function(){
             var thus = this;
-            let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            let tmp = Tablefabrication.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
             delete tmp.priority;
             jobs.push(tmp);
             $(this).prop("checked",false);
@@ -148,9 +146,9 @@ $(document).ready(()=>{
         });
         if(confirm("Are you sure?")){
             for(let job in jobs)
-                Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
+            Tablefabrication.rows = Tablefabrication.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit('sendto' + $(this).attr('id').split('_')[1], jobs);
-            Tablepolish.calcTime();
+            Tablefabrication.calcTime();
 
         }
     // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
@@ -161,45 +159,33 @@ $(document).ready(()=>{
       let jobs = [];
       $(".checkbox:checked").each(function(){
         var thus = this;
-        let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+        let tmp = Tablefabrication.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
         delete tmp.priority;
         jobs.push(tmp);
         $(this).prop("checked",false);
       });
       if(confirm("Are you sure?")){
         for(let job in jobs)
-          Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
+        Tablefabrication.rows = Tablefabrication.rows.filter(rows => rows.id != jobs[job].id);
         socket.emit('sendto'+ $(this).attr('id').split('_')[1],jobs);
-        Tablepolish.calcTime();
+        Tablefabrication.calcTime();
       }
     });
-    //View items
-    // $("#view").click(function()){
-    //     let jobs = [];
-    //     $(".checkbox:checked").each(function(){
-    //         var thus = this;
-    //         let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
-    //     $(this).prop("checked",false)
-
-    //     }
-    //     $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );
-    // }
-
     // Finish process
     $("#finish").click(function(){
       var jobs = []
         $(".checkbox:checked").each(function(){
             var thus = this;
-            let tmp = Tablepolish.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
+            let tmp = Tablefabrication.rows.filter(rows => rows.id ==$(thus).attr("id"))[0];
             delete tmp.priority;
             jobs.push(tmp);
             $(this).prop("checked",false);
         });
         if(confirm("Do you want to finish the process?")){
             for(job in jobs)
-                Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
+            Tablefabrication.rows.rows = Tablefabrication.rows.filter(rows => rows.id != jobs[job].id);
             socket.emit($(this).attr('id'),jobs);
-            Tablepolish.calcTime();
+            Tablefabrication.calcTime();
             
         }
     });
