@@ -49,9 +49,11 @@ var TableAntique = new Vue({
             let time1 = 0;
             let time2 = 0;
             let time3 = 0;
+            let time4 = 0;
+            let time5 = 0;
             for(let entry in this.rows){
                 let tmp = this.rows[entry].estimated_time.split('|');
-                if(tmp.length == 3){
+                if(tmp.length == 5){
                     for(let i = 0 ; i < tmp.length ; i ++){
                         let hms = tmp[i].split(':');
                         switch(i){
@@ -64,6 +66,12 @@ var TableAntique = new Vue({
                             case 2:
                                 time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
                                 break;
+                            case 3:
+                                time4 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
+                            case 4:
+                                time5 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]));                       
+                                break;
                         }
                     }
                 }
@@ -71,7 +79,11 @@ var TableAntique = new Vue({
             let aux1 = Math.floor( time1 / 3600 ) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
             let aux2 = Math.floor( time2 / 3600 ) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
             let aux3 = Math.floor( time3 / 3600 ) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
-            this.estimatedTime = aux1;
+            let aux4 = Math.floor( time4 / 3600 ) + ':' + str_pad_left(Math.floor(( time4 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time4 % 3600 ) % 60, '0', 2);
+            let aux5 = Math.floor( time5 / 3600 ) + ':' + str_pad_left(Math.floor(( time5 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time5 % 3600 ) % 60, '0', 2);
+            /* let aux6 = Math.floor(aux1 + aux2); */
+            this.estimatedTime = aux1 + '| MACHINE TIME: ' + aux2 ;
+            /* this.estimatedTotal = aux6 ; */
         },
       "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {

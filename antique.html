@@ -34,6 +34,7 @@
                 <li><a href="/polish">Polish</a></li>
                 <li><a href="/antique">Antique</a></li>
                 <li><a href="/powder">Powder Coating</a></li>
+                <li><a href="/fabrication">Fabrication</a></li>
                 <li><a href="/product-Management">Product Management</a></li>
             </ul>
 
@@ -52,6 +53,7 @@
                             <li><a href="/polish">Polish</a></li>
                             <li><a href="/antique">Antique</a></li>
                             <li><a href="/powder">Powder coating</a></li>
+                            <li><a href="/fabrication">Fabrication</a></li>
                             <li><a href="/product-Management">Product Management</a></li>
                         </ul>
                     </div>
@@ -93,6 +95,7 @@
                     <tr id="source" v-for="row in rows">
                         <td> {{row.id}} </td>
                         <td> {{row.estimated_time.split('|')[0]}}</td>
+                        <td> {{row.estimated_time.split('|')[1]}}</td>
                         <td> {{row.pulled_date}} </td>
                         <td> {{row.orders}} </td>
                         <td> {{row.bin}} </td>
@@ -111,7 +114,7 @@
                         
                     </tr>
                     <tr>
-                        <td colspan="10">TOTAL TIME: {{estimatedTime}}</td>
+                        <td colspan="10">LABOUR TIME: {{estimatedTime}}</td>
                     </tr>
                     </tbody>
                 </table>

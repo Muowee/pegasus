@@ -101,8 +101,8 @@ var jobcard = new Vue({
             let time1 = 0;
             let time2 = 0;
             let time3 = 0;
-            // let time4 = 0;
-            // let time5 = 0;
+            let time4 = 0;
+            let time5 = 0;
             for(let entry in this.gridData){
                 let tmp = this.gridData[entry].time.split('|');
                 if(tmp.length == 5){
@@ -118,12 +118,12 @@ var jobcard = new Vue({
                             case 2:
                                 time3 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
                                 break;
-                            // case 3:
-                            //     time4 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
-                            //     break;
-                            // case 4:
-                            //     time5 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
-                            //     break;
+                            case 3:
+                                time4 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                                break;
+                            case 4:
+                                time5 += (parseInt(hms[0]*3600) + parseInt(hms[1]*60) + parseInt(hms[2]))* parseInt(this.gridData[entry].Quantity) ;                       
+                                break;
                         }
                     }
                 }
@@ -131,9 +131,9 @@ var jobcard = new Vue({
             let aux1 = str_pad_left(Math.floor( time1 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time1 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time1 % 3600 ) % 60, '0', 2);
             let aux2 = str_pad_left(Math.floor( time2 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time2 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time2 % 3600 ) % 60, '0', 2);
             let aux3 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
-            // let aux4 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
-            // let aux5 = str_pad_left(Math.floor( time3 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time3 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time3 % 3600 ) % 60, '0', 2);
-            this.estTime.time = "" + aux1 + '|' + aux2 + '|' + aux3;
+            let aux4 = str_pad_left(Math.floor( time4 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time4 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time4 % 3600 ) % 60, '0', 2);
+            let aux5 = str_pad_left(Math.floor( time5 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time5 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time5 % 3600 ) % 60, '0', 2);
+            this.estTime.time = "" + aux1 + '|' + aux2 + '|' + aux3 + '|' + aux4 + '|' + aux5;
         }
     }
 

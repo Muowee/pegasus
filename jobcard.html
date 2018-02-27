@@ -148,13 +148,15 @@
                 </td>
                 
                 <td colspan="3" class="custom" v-if="department.name == 'Antiquing'">
-                    Estimation Time: {{esttime.time.split('|')[0]}}
+                    Labour Time: {{esttime.time.split('|')[0]}}
+                    Machine Time: {{esttime.time.split('|')[1]}}
                 </td>
                 <td colspan="3" class="custom" v-else-if="department.name == 'Powder Coating'">
-                    Estimation Time: {{esttime.time.split('|')[1]}}
+                    Labour Time: {{esttime.time.split('|')[2]}}
+                    Machine Time: {{esttime.time.split('|')[3]}}
                 </td>
                 <td colspan="3" class="custom" v-else="department.name == 'Polishing'">
-                    Estimation Time: {{esttime.time.split('|')[2]}}
+                    Estimation Time: {{esttime.time.split('|')[4]}}
                 </td>
                 
             </tr>
