@@ -109,7 +109,7 @@ $(document).ready(()=>{
             $(this).prop("checked",false);
         });
 
-        if(confirm("Are you sure?")){
+        if(confirm("You will DELETE the items. CLIP are you sure?")){
             for(let prod in prods)
                 Tableproduct.rows = Tableproduct.rows.filter(rows => rows.id != prods[prod].id);
             socket.emit('remove', prods);
@@ -127,11 +127,11 @@ $(document).ready(()=>{
             prods.push(tmp);
             $(this).prop("checked",false);
         });
-        if(confirm("Are you sure?")){
+        if(confirm("You will modify the item(s). Are you sure?")){
             socket.emit('replace', prods);
         }
     });
-    // Finish process
+    // Add process
     $("#add").click(function(){
         Vue.set(Tableproduct.rows, Tableproduct.rows.length, 
             {

@@ -39,16 +39,16 @@ var departments = [
 ];
 
 var job = [
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''},
-    { Quantity: 0, Part: '', id: '', time:''}
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''},
+    { Quantity: '', Part: '', id: '', time:''}
 ];
 
 var orders= [

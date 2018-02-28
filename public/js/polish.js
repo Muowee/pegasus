@@ -36,10 +36,10 @@ socket.on('newJob',(data)=>{
 });
 
 
+
 var Tablepolish = new Vue({
     el: '#Tablepolish',
     data: {
-        
         currentPage: 1,
         elementsPerPage: 20000000,
         ascending: false,
@@ -85,7 +85,18 @@ var Tablepolish = new Vue({
             let aux4 = str_pad_left(Math.floor( time4 / 3600 ), '0', 2) + ':' + str_pad_left(Math.floor(( time4 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time4 % 3600 ) % 60, '0', 2);
             let aux5 = Math.floor( time5 / 3600 ) + ':' + str_pad_left(Math.floor(( time5 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time5 % 3600 ) % 60, '0', 2);
             this.estimatedTime = aux5;
-        },
+       } ,
+       /* csvExport: function (users) {
+        var csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += this.users.map(function(d){
+          console.log(d);
+          return JSON.stringify(d);
+        })
+        .join('\n') 
+        .replace(/(^\{)|(\}$)/mg, '');
+        window.open( encodeURI(csvContent) );
+      } */
+      
 
         "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {
@@ -156,6 +167,7 @@ $(document).ready(()=>{
             $(this).prop("checked",false);
             
         });
+        
         if(confirm("Are you sure?")){
             for(let job in jobs)
                 Tablepolish.rows = Tablepolish.rows.filter(rows => rows.id != jobs[job].id);
@@ -163,7 +175,7 @@ $(document).ready(()=>{
             Tablepolish.calcTime();
 
         }
-    // $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );       
+       /*  $(".modal-content").append('<p>' + JSON.stringify(job) + '</p>' );   */
     });
 
     // Send to Powder Coating, reference in the table
@@ -184,6 +196,9 @@ $(document).ready(()=>{
       }
     });
     //View items
+    $('#modal1').modal('open');
+
+
     // $("#view").click(function()){
     //     let jobs = [];
     //     $(".checkbox:checked").each(function(){

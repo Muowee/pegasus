@@ -83,7 +83,7 @@ var TableAntique = new Vue({
             let aux5 = Math.floor( time5 / 3600 ) + ':' + str_pad_left(Math.floor(( time5 % 3600 ) / 60), '0', 2) + ':' + str_pad_left(( time5 % 3600 ) % 60, '0', 2);
             /* let aux6 = Math.floor(aux1 + aux2); */
             this.estimatedTime = aux1 + '| MACHINE TIME: ' + aux2 ;
-            /* this.estimatedTotal = aux6 ; */
+            this.estimatedTotal = aux2 ;
         },
       "sortTable": function sortTable(col) {
         if (this.sortColumn === col) {

@@ -34,6 +34,10 @@ module.exports = function(app){
         res.sendFile('productManagement.html',{ root: root_folder});
     });
 
+    app.get('/chat', (req, res)=>{
+        res.sendFile('chat.html',{ root: root_folder});
+    });
+
     app.use(express.static('node_modules', { root: root_folder }));
 
     app.use(express.static('public',{root: root_folder}));

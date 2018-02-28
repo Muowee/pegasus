@@ -25,6 +25,7 @@
                 <li><a href="/jobcard">JobCard</a></li>
                 <li class="active"><a class="dropdown-button" href="/index" data-activates="pages" data-constrainWidth="false" data-belowOrigin="true">Departments<i class="material-icons right">arrow_drop_down</i></a></li>
                 <li><a href="http://192.168.1.150:9080/stock/index.php">Stock System</a></li>
+                <li><a href="/chat">Chat</a></li> 
                 <i class="large material-icons"><a href="/statistics">insert_chart</a></i>
             </ul>
       
@@ -94,8 +95,7 @@
                     <tbody>
                     <tr id="source" v-for="row in rows">
                         <td> {{row.id}} </td>
-                        <td> {{row.estimated_time.split('|')[0]}}</td>
-                        <td> {{row.estimated_time.split('|')[1]}}</td>
+                        <td> {{row.estimated_time.split('|')[0]+ '|' + row.estimated_time.split('|')[1] }}</td>
                         <td> {{row.pulled_date}} </td>
                         <td> {{row.orders}} </td>
                         <td> {{row.bin}} </td>

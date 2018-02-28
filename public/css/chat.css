@@ -1,0 +1,83 @@
+body {
+    background: rgb(0, 1, 2);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  
+  #main {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+  }
+  #main .row {
+    margin-bottom: 0;
+  }
+  #main .msg {
+    padding: 5px 12px;
+    margin: 15px 0 0 0;
+    border-radius: 5px;
+    position: relative;
+  }
+  #main .msg.from-other {
+    float: left;
+    background-color: #e6ee9c;
+  }
+  #main .msg.from-other .username {
+    color: #64b5f6;
+    font-weight: bold;
+  }
+  #main .msg.from-other:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    border-top: 10px solid #e6ee9c;
+    border-top-color: #e6ee9c;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+  #main .msg.from-me {
+    float: right;
+    background-color: #b3e5fc;
+  }
+  #main .msg.from-me:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border-top: 10px solid #b3e5fc;
+    border-top-color: #b3e5fc;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+  #main .msg .img {
+    max-width: 100%;
+  }
+  
+  .page-footer {
+    margin-top: 20px;
+  }
+  .page-footer .prefix {
+    margin-top: 0.5rem;
+  }
+  .page-footer .prefix.active {
+    color: white;
+  }
+  .page-footer .materialize-textarea {
+    margin-bottom: 0;
+    min-height: 1rem;
+    height: 22px;
+    padding: 1rem 1rem 1.3rem;
+    border-bottom: solid 1px white;
+  }
+  .page-footer .materialize-textarea:focus {
+    background-color: white;
+    color: #234;
+  }
+  
